@@ -1,5 +1,5 @@
 ﻿
-namespace Application
+namespace TheApp
 {
     partial class Form1
     {
