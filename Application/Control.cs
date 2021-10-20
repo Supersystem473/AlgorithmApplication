@@ -8,5 +8,6 @@ namespace Application
 {
     class Control
     {
+        Console.Writelin("Hello World");
     }
 }
