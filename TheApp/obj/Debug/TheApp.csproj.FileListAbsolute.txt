@@ -1,8 +1,0 @@
-C:\Users\jdste\Source\Repos\AlgorithmApplication\TheApp\bin\Debug\TheApp.exe.config
-C:\Users\jdste\Source\Repos\AlgorithmApplication\TheApp\bin\Debug\TheApp.exe
-C:\Users\jdste\Source\Repos\AlgorithmApplication\TheApp\bin\Debug\TheApp.pdb
-C:\Users\jdste\Source\Repos\AlgorithmApplication\TheApp\obj\Debug\TheApp.Properties.Resources.resources
-C:\Users\jdste\Source\Repos\AlgorithmApplication\TheApp\obj\Debug\TheApp.csproj.GenerateResource.cache
-C:\Users\jdste\Source\Repos\AlgorithmApplication\TheApp\obj\Debug\TheApp.csproj.CoreCompileInputs.cache
-C:\Users\jdste\Source\Repos\AlgorithmApplication\TheApp\obj\Debug\TheApp.exe
-C:\Users\jdste\Source\Repos\AlgorithmApplication\TheApp\obj\Debug\TheApp.pdb
