@@ -83,6 +83,8 @@ namespace WindowsFormsApp1
                 temp = temp.Next;
                 
             }
+            xlWorkBook.Close();
+            xlApp.Quit();
         }
     }
 }
