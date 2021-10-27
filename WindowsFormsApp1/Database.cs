@@ -17,21 +17,70 @@ namespace WindowsFormsApp1
         Excel.Application xlApp;
         Excel.Workbook xlWorkBook;
         Excel.Worksheet xlWorkSheet;
-        private string value, name, count;
+        private string value, name; 
+        private int count;
+        public Node<string> DBList = new Node<string>();
+        public string[] DBArray;
+        public int Count
+        {
+            get { return count; }
+            set { }
+        }
         public Database(string DBname)
         {
             string DatabasePath = CreateDBPath(DBname);
             CreateArray(DatabasePath);
         }
+
+        //For Maggie: Need to return the filepath
         public string CreateDBPath(string dbName)
         {
             return  $@"DataStreams\{dbName}.xlsx";
         }
         public void CreateArray(string filepath)
         {
+            Node<string> temp = DBList;
             xlApp = new Excel.Application();
             xlWorkBook = xlApp.Workbooks.Open(filepath);
-            int row = 2, column = 1;
+            xlWorkSheet = (Excel.Worksheet)xlWorkBook.Sheets[1];
+            int row = 1, column = 1;
+            name = xlWorkSheet.Cells[row, column].Value.ToString();
+            column++;
+            while (row != 0)
+            {
+                
+                value = xlWorkSheet.Cells[row, column].Value.ToString();
+                if (value == "")
+                {
+                    row++;
+
+                    if (xlWorkSheet.Cells[row, column].Value.ToString() == "")
+                    {
+                        row = 0;
+                    }
+                }
+                else
+                {
+                    while (temp != null)
+                    {
+                        temp = temp.Next;
+                    }
+                    temp.value = xlWorkSheet.Cells[row, column].Value.ToString();
+                    DBList.count++;
+                    count++;
+                    column++;
+                }
+                
+
+            }
+            DBArray = new string[count];
+            for(int i = 0; i < DBArray.Length; i++) 
+            {
+                temp = DBList;
+                DBArray[i] = temp.value;
+                temp = temp.Next;
+                
+            }
         }
     }
 }
