@@ -49,22 +49,24 @@ namespace WindowsFormsApp1
             while (row != 0)
             {
                 
-                value = xlWorkSheet.Cells[row, column].Value.ToString();
-                if (value == "")
+                
+                if (xlWorkSheet.Cells[row, column].Value == null)
                 {
                     row++;
 
-                    if (xlWorkSheet.Cells[row, column].Value.ToString() == "")
+                    if (xlWorkSheet.Cells[row, column].Value == null)
                     {
                         row = 0;
                     }
                 }
+
                 else
                 {
                     while (temp != null)
                     {
                         temp = temp.Next;
                     }
+                    value = xlWorkSheet.Cells[row, column].Value.ToString();
                     temp.value = xlWorkSheet.Cells[row, column].Value.ToString();
                     DBList.count++;
                     count++;
