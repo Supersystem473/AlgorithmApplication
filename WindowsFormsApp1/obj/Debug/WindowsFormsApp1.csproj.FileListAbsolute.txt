@@ -1,0 +1,11 @@
+C:\Users\jdste\Source\Repos\AlgorithmApplication\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.AssemblyReference.cache
+C:\Users\jdste\Source\Repos\AlgorithmApplication\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.ResolveComReference.cache
+C:\Users\jdste\Source\Repos\AlgorithmApplication\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Form1.resources
+C:\Users\jdste\Source\Repos\AlgorithmApplication\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
+C:\Users\jdste\Source\Repos\AlgorithmApplication\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.GenerateResource.cache
+C:\Users\jdste\Source\Repos\AlgorithmApplication\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
+C:\Users\jdste\Source\Repos\AlgorithmApplication\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe.config
+C:\Users\jdste\Source\Repos\AlgorithmApplication\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe
+C:\Users\jdste\Source\Repos\AlgorithmApplication\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.pdb
+C:\Users\jdste\Source\Repos\AlgorithmApplication\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
+C:\Users\jdste\Source\Repos\AlgorithmApplication\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb

@@ -15,5 +15,7 @@ namespace WindowsFormsApp1
         public Form1()
         {
             InitializeComponent();
+            Database BoolDB = new Database("BoolDB");
         }
     }
+}
