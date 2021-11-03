@@ -11,6 +11,8 @@ namespace WindowsFormsApp1
         public Node<T> Next;
         public int count;
         public T value;
+        
+        
         public Node()
         {
             Next = null;

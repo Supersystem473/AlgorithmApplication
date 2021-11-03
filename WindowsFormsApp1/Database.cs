@@ -21,6 +21,7 @@ namespace WindowsFormsApp1
         private int count;
         public Node<string> DBList = new Node<string>();
         public string[] DBArray;
+        public AVLTree AVL = new AVLTree();
         public int Count
         {
             get { return count; }
@@ -68,6 +69,7 @@ namespace WindowsFormsApp1
                     }
                     value = xlWorkSheet.Cells[row, column].Value.ToString();
                     temp.value = xlWorkSheet.Cells[row, column].Value.ToString();
+                    AVL.root = AVL.insertNode(AVL.root, xlWorkSheet.Cells[row, column].Value.ToString());
                     DBList.count++;
                     count++;
                     column++;
