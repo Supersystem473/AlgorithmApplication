@@ -8,26 +8,18 @@ namespace WindowsFormsApp1
 {
     class Lossy
     {
-
-        private string[,] testData = new string[,] { { "1", "3", "4", "5", "2", "2", "1", "3", "3", "4" },
-                                                     { "2", "4", "3", "2", "5", "3", "1", "2", "3", "1" },
-                                                     { "3", "3", "2", "3", "5", "4", "4", "5", "3", "2" },
-                                                     { "4", "3", "2", "5", "5", "5", "3", "4", "2", "1" },
-                                                     { "2", "3", "2", "3", "4", "3", "3", "1", "1", "2" },
-                                                     { "1", "4", "4", "5", "2", "1", "2", "3", "1", "3" },
-                                                     { "4", "4", "3", "2", "2", "3", "1", "2", "3", "4" },
-                                                     { "1", "1", "2", "3", "2", "4", "5", "2", "1", "2" },
-                                                     { "4", "2", "3", "4", "3", "2", "1", "3", "4", "5" },
-                                                     { "2", "3", "2", "1", "1", "4", "5", "2", "3", "3" } };
-
-
+        private Database database;
+        IDictionary<string, int[]> dataSet = new Dictionary<string, int[]>();
         private int N = 0;
         private int bucket_width = 0;
         private double epsilon = 0.0;
         private int cBucketId = 1;
         private bool newBuc = false;
-
-        IDictionary<string, int[]> dataSet = new Dictionary<string, int[]>();
+        public Lossy(Database db)
+                {
+                    database = db;
+                }
+        
 
         public void inDataSet(string data)
         {
@@ -75,7 +67,7 @@ namespace WindowsFormsApp1
             bucket_width = (int)Math.Ceiling(1 / epsilon);
             //Console.WriteLine(bucket_width);
 
-            foreach (string i in testData)
+            foreach (string i in database.DBArray)
             {
                 inDataSet(i);
                 bucketNum();
