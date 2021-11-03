@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\WindowsFormsApp1"
+    "\\Application",
+    "\\TheApp",
+    "\\WindowsFormsApp1",
+    "\\WindowsFormsApp1\\DataStreams"
   ],
   "SelectedNode": "\\WindowsFormsApp1\\WindowsFormsApp1.sln",
   "PreviewInSolutionExplorer": false
