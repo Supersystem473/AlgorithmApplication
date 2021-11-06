@@ -5,13 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace WindowsFormsApp1
-{ 
+{
     public class AVLNode
     {
-        public int value, height, count = 1;
+        public string value;
+        public int height, count = 1;
         public AVLNode left, right;
 
-        public AVLNode(int d)
+        public AVLNode(string d)
         {
             value = d;
             height = 1;
@@ -22,7 +23,42 @@ namespace WindowsFormsApp1
     {
 
         public AVLNode root;
-
+        private string[,] AlphabeticalOrder = new string[,] {
+                                                               {"1","-9"},
+                                                               {"2", "-8" },
+                                                               {"3","-7" },
+                                                               {"4","-6" },
+                                                               {"5","-5" },
+                                                               {"6","-4" },
+                                                               {"7","-3" },
+                                                               {"8","-2" },
+                                                               {"9", "-1" },
+                                                               {"A","1"},
+                                                               {"B","2"},
+                                                               {"C","3"},
+                                                               {"D","4"},
+                                                               {"E","5"},
+                                                               {"F","6"},
+                                                               {"G","7"},
+                                                               {"H","8"},
+                                                               {"I","9"},
+                                                               {"J","10"},
+                                                               {"K","11"},
+                                                               {"L","12" },
+                                                               {"M","13" },
+                                                               {"N","14" },
+                                                               {"O","15" },
+                                                               {"P","16" },
+                                                               {"Q","17" },
+                                                               {"R","18" },
+                                                               {"S","19" },
+                                                               {"T","20" },
+                                                               {"U","21" },
+                                                               {"V","22" },
+                                                               {"W","23" },
+                                                               {"X", "24" },
+                                                               {"Y","25" },
+                                                               {"Z","26" } };
         // A utility function to get
         // the height of the tree
         int height(AVLNode N)
@@ -85,19 +121,56 @@ namespace WindowsFormsApp1
         }
 
         // Get Balance factor of node N
-         public int getBalance(AVLNode N)
+        public int getBalance(AVLNode N)
         {
             if (N == null)
                 return 0;
 
             return height(N.left) - height(N.right);
         }
-        public void insert(AVLNode node, T key)
+        public void insert(AVLNode node, string key)
         {
             AVLNode temp = node;
+            if (temp.value == null)
+            {
+                temp.value = key;
+            }
+
+
+        }
+        public bool AlphabeticalCheck(string s1, string s2)//if s1 is before s2 then it is true
+        {
+            int i = 0;
+            while (s1[i] != null)
+            {
+                if (AlphabeticalIndex(s1, i) > AlphabeticalIndex(s2, i))
+                {
+                    return true;
+                }
+                else if (AlphabeticalIndex(s1, i) < AlphabeticalIndex(s2, i))
+                {
+                    return false;
+                }
+                i++;
+            }
+            return false;
+        
+        }
+        public int AlphabeticalIndex(string pstring, int pindex)
+        {
+            for (int i = 0; i < AlphabeticalOrder.Length; i++)
+            {
+                if(pstring[pindex] == AlphabeticalOrder[i,0][0])
+                {
+                    
+                    return int.Parse(AlphabeticalOrder[i,0]);
+                }
+            }
+            
+            return 0;
             
         }
-        public AVLNode insertNode(AVLNode node, int key)
+        public AVLNode insertNode(AVLNode node, string key)
         {
 
             /* 1. Perform the normal BST insertion */
