@@ -53,6 +53,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AVLTree.cs" />
     <Compile Include="Control.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="Form1.cs">
