@@ -19,10 +19,11 @@ namespace WindowsFormsApp1
         }
     }
 
-    public class AVLTree<T>
+    public class AVLTree
     {
 
         public AVLNode root;
+        /*
         private string[,] AlphabeticalOrder = new string[,] {
                                                                {"1","-9"},
                                                                {"2", "-8" },
@@ -59,6 +60,7 @@ namespace WindowsFormsApp1
                                                                {"X", "24" },
                                                                {"Y","25" },
                                                                {"Z","26" } };
+        */
         // A utility function to get
         // the height of the tree
         int height(AVLNode N)
@@ -128,97 +130,66 @@ namespace WindowsFormsApp1
 
             return height(N.left) - height(N.right);
         }
-        public void insert(AVLNode node, string key)
+
+
+        public AVLNode insert(AVLNode node, string key)
         {
-            AVLNode temp = node;
-            if (temp.value == null)
             {
-                temp.value = key;
-            }
 
-
-        }
-        public bool AlphabeticalCheck(string s1, string s2)//if s1 is before s2 then it is true
-        {
-            int i = 0;
-            while (s1[i] != null)
-            {
-                if (AlphabeticalIndex(s1, i) > AlphabeticalIndex(s2, i))
+                /* 1. Perform the normal BST insertion */
+                if (node == null)
+                    return (new AVLNode(key));
+                int order = string.Compare(node.value, key, StringComparison.CurrentCulture);
+                if (order == -1)
+                    node.left = insert(node.left, key);
+                else if (order == 1)
+                    node.right = insert(node.right, key);
+                else // Duplicate keys not allowed
                 {
-                    return true;
+                    node.count++;
+                    return node;
                 }
-                else if (AlphabeticalIndex(s1, i) < AlphabeticalIndex(s2, i))
-                {
-                    return false;
-                }
-                i++;
-            }
-            return false;
-        
-        }
-        public int AlphabeticalIndex(string pstring, int pindex)
-        {
-            for (int i = 0; i < AlphabeticalOrder.Length; i++)
-            {
-                if(pstring[pindex] == AlphabeticalOrder[i,0][0])
-                {
-                    
-                    return int.Parse(AlphabeticalOrder[i,0]);
-                }
-            }
-            
-            return 0;
-            
-        }
-        public AVLNode insertNode(AVLNode node, string key)
-        {
 
-            /* 1. Perform the normal BST insertion */
-            if (node == null)
-                return (new AVLNode(key));
 
-            if (key < node.value)
-                node.left = insertNode(node.left, key);
-            else if (key > node.value)
-                node.right = insertNode(node.right, key);
-            else // Duplicate keys not allowed
-                return node;
-
-            /* 2. Update height of this ancestor node */
-            node.height = 1 + max(height(node.left),
+                /* 2. Update height of this ancestor node */
+                node.height = 1 + max(height(node.left),
                                 height(node.right));
 
-            /* 3. Get the balance factor of this ancestor
-                node to check whether this node became
-                unbalanced */
-            int balance = getBalance(node);
+                /* 3. Get the balance factor of this ancestor
+                    node to check whether this node became
+                    unbalanced */
+                int balance = getBalance(node);
 
-            // If this node becomes unbalanced, then there
-            // are 4 cases Left Left Case
-            if (balance > 1 && key < node.left.value)
-                return rightRotate(node);
+                // If this node becomes unbalanced, then there
+                // are 4 cases Left Left Case
+                int leftorder = string.Compare(node.left.value, key, StringComparison.CurrentCulture);
+                int rightorder = string.Compare(node.right.value, key, StringComparison.CurrentCulture);
+                if (balance > 1 && leftorder == 1)
+                    return rightRotate(node);
 
-            // Right Right Case
-            if (balance < -1 && key > node.right.value)
-                return leftRotate(node);
+                // Right Right Case
+                if (balance < -1 && rightorder == -1)
+                    return leftRotate(node);
 
-            // Left Right Case
-            if (balance > 1 && key > node.left.value)
-            {
-                node.left = leftRotate(node.left);
-                return rightRotate(node);
+                // Left Right Case
+                if (balance > 1 && leftorder == 1)
+                {
+                    node.left = leftRotate(node.left);
+                    return rightRotate(node);
+                }
+
+                // Right Left Case
+                if (balance < -1 && rightorder == -1)
+                {
+                    node.right = rightRotate(node.right);
+                    return leftRotate(node);
+                }
+
+                /* return the (unchanged) node pointer */
+                return node;
             }
-
-            // Right Left Case
-            if (balance < -1 && key < node.right.value)
-            {
-                node.right = rightRotate(node.right);
-                return leftRotate(node);
-            }
-
-            /* return the (unchanged) node pointer */
-            return node;
         }
+            
 
         // A utility function to print preorder traversal
         // of the tree.
