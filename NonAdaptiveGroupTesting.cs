@@ -12,7 +12,15 @@ namespace WindowsFormsApp1
          private bool check;
          private int totalvalue;
             // call in array 
-        public void UpdateCounters(x, trans,c[0][totalvalue])
+            public string bit (int x,int j )
+        {
+           
+                int val = x;
+                string binary = Convert.ToString(val, 2);
+                int length = binary.Length() - 1;
+                return binary[lengh - j] 
+            }
+        public void UpdateCounters( int x, bool trans,c[0][totalvalue])
         {
             if (trans == insertion)
             {
@@ -25,7 +33,7 @@ namespace WindowsFormsApp1
             c[0] = c[0]+d
             for (j = 1, j<totalvalue, j++)
             {
-                c[j] = c[j]+Bit(x,j)*d
+                c[j] = c[j]+bit(x,j)*d
             }
         }
             public void ProcessItem(int x, string tt, int T, int W)
