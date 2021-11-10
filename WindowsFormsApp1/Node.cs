@@ -32,7 +32,7 @@ namespace WindowsFormsApp1
             }
         }
     }
-    class Node<T>
+    public class Node<T>
     {
         public Node<T> Next;
         public int count;

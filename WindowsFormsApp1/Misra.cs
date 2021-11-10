@@ -95,11 +95,7 @@ namespace WindowsFormsApp1
                 return z;
             }
         }
-        private void A1checklist(List plist, int pcount, string pval)
-        {
-
-        }
-
+       
 
     }
 }

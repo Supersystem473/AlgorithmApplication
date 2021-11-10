@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace WindowsFormsApp1
@@ -11,7 +12,15 @@ namespace WindowsFormsApp1
          private int numofinsertions
          private bool check;
          private int totalvalue;
+         public string result;
+        public double mem, time;
+        private Process process;
+        private ProcessStartInfo info;
             // call in array 
+        public NonAdaptiveGroupTesting(Database db)
+        {
+            
+        }
         public void UpdateCounters(x, trans,c[0][totalvalue])
         {
             if (trans == insertion)

@@ -8,11 +8,12 @@ using Microsoft;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Net.Mail;
 using System.Net;
+using WindowsFormsApp1.Properties;
 
 
 namespace WindowsFormsApp1
 {
-    class Database
+    public class Database
     {
         Excel.Application xlApp;
         Excel.Workbook xlWorkBook;
@@ -22,24 +23,27 @@ namespace WindowsFormsApp1
         public Node<string> DBList = new Node<string>();
         public string[] DBArray;
         public AVLTree AVL = new AVLTree();
+        public string key;
         public int Count
         {
             get { return count; }
             set { }
         }
-        public Database(string DBname)
+        public Database(string DBname, int keyrow, int keycolumn)
         {
             string DatabasePath = CreateDBPath(DBname);
-            CreateArray(DatabasePath);
+            CreateArray(DatabasePath, keyrow, keycolumn);
         }
 
-        //For Maggie: Need to return the filepath
+        //C:\Users\jdste\source\repos\AlgorithmApplication\WindowsFormsApp1\DataStreams\BoolDB.xlsx
+        //C:\Users\jdste\source\repos\AlgorithmApplication\WindowsFormsApp1\Properties\onethrough50.xlsx
         public string CreateDBPath(string dbName)
         {
-            return  $@"DataStreams\{dbName}.xlsx";
+            return  $@"C:\Users\jdste\source\repos\AlgorithmApplication\WindowsFormsApp1\Properties\{dbName}.xlsx";
         }
-        public void CreateArray(string filepath)
+        public void CreateArray(string filepath, int keyrow, int keycolumn)
         {
+            
             Node<string> temp = DBList;
             xlApp = new Excel.Application();
             xlWorkBook = xlApp.Workbooks.Open(filepath);
@@ -68,6 +72,7 @@ namespace WindowsFormsApp1
                         temp = temp.Next;
                     }
                     value = xlWorkSheet.Cells[row, column].Value.ToString();
+                    temp = new Node<string>();
                     temp.value = xlWorkSheet.Cells[row, column].Value.ToString();
                     AVL.root = AVL.insert(AVL.root, xlWorkSheet.Cells[row, column].Value.ToString());
                     DBList.count++;
@@ -85,6 +90,9 @@ namespace WindowsFormsApp1
                 temp = temp.Next;
                 
             }
+
+            //get the key cell
+            key = xlWorkSheet.Cells[keyrow, keycolumn].Value.ToString();
             xlWorkBook.Close();
             xlApp.Quit();
         }
