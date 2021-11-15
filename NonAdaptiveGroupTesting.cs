@@ -15,11 +15,12 @@ namespace WindowsFormsApp1
          public string result;
         public double mem, time;
         private Process process;
-        private ProcessStartInfo info;
-            // call in array 
+        private ProcessStartInfo info = new ProcessStartInfo();
+        private System.Array c;
         public NonAdaptiveGroupTesting(Database db)
         {
-            
+            c = db.DBArray;
+
         }
         public void UpdateCounters(x, trans,c[0][totalvalue])
         {

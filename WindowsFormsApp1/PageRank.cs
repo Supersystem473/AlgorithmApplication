@@ -18,21 +18,25 @@ namespace WindowsFormsApp1
 		public double[] results;
 		public double time;
 		public double mem;
-		private ProcessStartInfo info;
+		private ProcessStartInfo info = new ProcessStartInfo();
 		private Process process;
 		#endregion
 
 		#region Constructor
 
-		public PageRank(string[] pdb, double alpha = 0.85, double convergence = 0.0001, int checkSteps = 10)
+		public PageRank(System.Array pdb, double alpha = 0.85, double convergence = 0.0001, int checkSteps = 10)
 		{
 			
-			foreach(string e in pdb)
+			for (int i = 1; i < pdb.GetLength(0); i++)
             {
-				database.Add(e);
+				for(int j = 1; j < pdb.GetLength(1); j++)
+                {
+					database.Add(pdb.GetValue(i,j));
+				}
+				
             }
 			ArrayList linkMatrix = database;
-			Process start = Process.Start(info);
+			Process start = Process.Start(@"C:\Users\jdste\source\repos\AlgorithmApplication\WindowsFormsApp1\Properties\Info.txt");
 			Tuple<ArrayList, Vector<double>, ArrayList> tuple = TransposeLinkMatrix(linkMatrix);
 			_incomingLinks = tuple.Item1;
 			_numLinks = tuple.Item2;
@@ -90,9 +94,14 @@ namespace WindowsFormsApp1
 			ArrayList leafNodes = new ArrayList();
 			for (int i = 0; i < nPages; i++)
 			{
+				//Is this correct
 				List<int> values = outGoingLinks[i] as List<int>;
+				
 				if (values.Count == 0)
+                {
 					leafNodes.Add(i);
+				}
+					
 				else
 				{
 					numLinks[i] = values.Count;
@@ -151,7 +160,7 @@ namespace WindowsFormsApp1
 						oneAv = alpha * Sum(Take(iOld, leafNodes)) / N;
 
 					// the elements of the H x I multiplication
-					for (int j = 0; j < N; j++)
+					for (int j = 0; j <  N; j++)
 					{
 						List<int> page = (List<int>)at[j];
 						double h = 0;

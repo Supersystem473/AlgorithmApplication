@@ -7,13 +7,14 @@ namespace WindowsFormsApp1
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-        public Database BoolDB;
-        public Database OneToFifty;
-        public Database Alphabet;
-        public Database OneToFive;
-        public Database FiftyNames;
-        public Database ActiveDB;
-        
+        public Database BoolDB = new Database("BoolDB",1,7,"A1","A500");
+        public Database OneToFifty = new Database("onethrough50",1,18,"A1","N350");
+        public Database Alphabet = new Database("Alphabet",1,31,"A1","Z1550");
+        public Database OneToFive = new Database("Onethroughfive",1,33,"A1","AC5820");
+        public Database FiftyNames = new Database("FiftyRandomNames",1,7,"A1","A1000");
+        public Database ActiveDB = null;
+        public string filepath = @"C:\Users\jdste\source\repos\AlgorithmApplication\WindowsFormsApp1\Properties\Info.txt";
+
 
         /// <summary>
         /// Clean up any resources being used.

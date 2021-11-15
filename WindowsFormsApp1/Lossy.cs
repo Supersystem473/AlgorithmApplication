@@ -17,7 +17,7 @@ namespace WindowsFormsApp1
         private double epsilon = 0.0;
         private int cBucketId = 1;
         private bool newBuc = false;
-        private ProcessStartInfo startInfo;
+        private ProcessStartInfo startInfo = new ProcessStartInfo();
         private Process process;
         public double time;
         public double mem;
@@ -72,19 +72,22 @@ namespace WindowsFormsApp1
 
         public void runAlg()
         {
-            Process start = Process.Start(startInfo);
+            Process start = Process.Start(@"C:\Users\jdste\source\repos\AlgorithmApplication\WindowsFormsApp1\Properties\Info.txt");
             
             epsilon = .1;
             bucket_width = (int)Math.Ceiling(1 / epsilon);
             //Console.WriteLine(bucket_width);
 
-            foreach (string i in database.DBArray)
+            for (int i = 1; i < database.DBArray.GetLength(0); i++)
             {
-                inDataSet(i);
-                bucketNum();
-                if (newBuc)
+                for (int j = 1; j < database.DBArray.GetLength(1); j++)
                 {
-                    prune();
+                    inDataSet(database.DBArray.GetValue(i,j).ToString());
+                    bucketNum();
+                    if (newBuc)
+                    {
+                        prune();
+                    }
                 }
             }
             Node<string> ptemp = results;

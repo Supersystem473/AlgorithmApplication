@@ -36,22 +36,27 @@ namespace WindowsFormsApp1
                 ActiveDB = OneToFive;
             else if (DBSelector.SelectedIndex == 4)
                 ActiveDB = FiftyNames;
+            Console.WriteLine(DBSelector.SelectedIndex);
+            
             ControlKey.Text = ActiveDB.key;
+
         }
         private void RunAlgorithms(Database activedatabase)
         {
             //report started lossy
             Lossy lossy = new Lossy(activedatabase);
+            Node<string> temp = lossy.results;
             if(lossy.results == null)
             {
                 LossyHot.Text = "Inconclusive";
             }
             else {
                 LossyHot.Text = "";
-                while (lossy.results != null)
+                while (temp != null)
                 {
                     LossyHot.Text = LossyHot.Text + " " + lossy.results.value;
-                }
+                    temp = temp.Next;
+               }
             }
             LossyMem.Text = lossy.mem.ToString();
             LossyTime.Text = lossy.time.ToString();
@@ -77,6 +82,20 @@ namespace WindowsFormsApp1
             //report finished NonAdaptive
             //report started Muthu
             //report finished Muthu
+            //report Started Misra
+            Misra misra = new Misra(ActiveDB);
+            misra.Algorithm2(ActiveDB);
+            if(misra.A2Results == null)
+            {
+                MisraHot.Text = "Inconclusive";
+            }
+            else
+            {
+                MisraHot.Text = misra.A2Results[0].ToString();
+                MisraMem.Text = misra.mem.ToString() ;
+                MisraTime.Text = misra.time.ToString();
+            }
+            //report finished Misra
         }
 
         private void button3_Click(object sender, EventArgs e)
