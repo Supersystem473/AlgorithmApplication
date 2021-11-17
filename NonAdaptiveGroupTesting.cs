@@ -22,7 +22,7 @@ namespace WindowsFormsApp1
             mem = process.VirtualMemorySize64;
             time = process.TotalProcessorTime.Milliseconds;
         }
-        public string bit (int x,int j )
+        public string bit (int a,int b )
         {
            
                 int val = x;
@@ -44,7 +44,7 @@ namespace WindowsFormsApp1
             c[0] = c[0]+d
             for (j = 1, j<totalvalue, j++)
             {
-                c[j] = c[j]+bit( x, j)*d
+                c[j] = c[j]+bit(x,j)*d
             }
         }
             public void ProcessItem(var x, var tt,  T,  W)
