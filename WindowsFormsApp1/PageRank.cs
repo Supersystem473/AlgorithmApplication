@@ -26,17 +26,22 @@ namespace WindowsFormsApp1
 
 		public PageRank(System.Array pdb, double alpha = 0.85, double convergence = 0.0001, int checkSteps = 10)
 		{
-			
-			for (int i = 1; i < pdb.GetLength(0); i++)
+			int j = 1;
+			int i = 1;
+			while ( i <= pdb.GetLength(0))
             {
-				for(int j = 1; j < pdb.GetLength(1); j++)
+				while( j <= pdb.GetLength(1))
                 {
 					database.Add(pdb.GetValue(i,j));
+					j++;
 				}
+				j = 1;
+				i++;
 				
             }
 			ArrayList linkMatrix = database;
 			Process start = Process.Start(@"C:\Users\jdste\source\repos\AlgorithmApplication\WindowsFormsApp1\Properties\Info.txt");
+			
 			Tuple<ArrayList, Vector<double>, ArrayList> tuple = TransposeLinkMatrix(linkMatrix);
 			_incomingLinks = tuple.Item1;
 			_numLinks = tuple.Item2;
@@ -95,8 +100,8 @@ namespace WindowsFormsApp1
 			for (int i = 0; i < nPages; i++)
 			{
 				//Is this correct
-				List<int> values = outGoingLinks[i] as List<int>;
-				
+				List<string> values = new List<string>();
+				values.Add(outGoingLinks[i].ToString());
 				if (values.Count == 0)
                 {
 					leafNodes.Add(i);
@@ -106,7 +111,7 @@ namespace WindowsFormsApp1
 				{
 					numLinks[i] = values.Count;
 					// transpose the link matrix
-					foreach (int j in values)
+					for (int j = 0; j <values.Count;j++)
 					{
 						List<int> list = (List<int>)incomingLinks[j];
 						list.Add(i);

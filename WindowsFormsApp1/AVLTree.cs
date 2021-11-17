@@ -9,11 +9,17 @@ namespace WindowsFormsApp1
     public class AVLNode
     {
         public string value;
-        public int height, count = 1;
+        public int height, individualCounter;
+        private int offsetEstimate;
         public AVLNode left, right;
-
-        public AVLNode(string d)
+        public int OffsetEstimate
         {
+            get { return offsetEstimate; }
+        } 
+        public AVLNode(string d, int pcount)
+        {
+            offsetEstimate = pcount;
+            individualCounter = pcount;
             value = d;
             height = 1;
         }
@@ -23,44 +29,65 @@ namespace WindowsFormsApp1
     {
 
         public AVLNode root;
-        /*
-        private string[,] AlphabeticalOrder = new string[,] {
-                                                               {"1","-9"},
-                                                               {"2", "-8" },
-                                                               {"3","-7" },
-                                                               {"4","-6" },
-                                                               {"5","-5" },
-                                                               {"6","-4" },
-                                                               {"7","-3" },
-                                                               {"8","-2" },
-                                                               {"9", "-1" },
-                                                               {"A","1"},
-                                                               {"B","2"},
-                                                               {"C","3"},
-                                                               {"D","4"},
-                                                               {"E","5"},
-                                                               {"F","6"},
-                                                               {"G","7"},
-                                                               {"H","8"},
-                                                               {"I","9"},
-                                                               {"J","10"},
-                                                               {"K","11"},
-                                                               {"L","12" },
-                                                               {"M","13" },
-                                                               {"N","14" },
-                                                               {"O","15" },
-                                                               {"P","16" },
-                                                               {"Q","17" },
-                                                               {"R","18" },
-                                                               {"S","19" },
-                                                               {"T","20" },
-                                                               {"U","21" },
-                                                               {"V","22" },
-                                                               {"W","23" },
-                                                               {"X", "24" },
-                                                               {"Y","25" },
-                                                               {"Z","26" } };
-        */
+        private int count = 0;
+        public int Size()
+        {
+            return count;
+        }
+        public int[] Check(string x)
+        {
+            int[] check = new int[2];
+            AVLNode ptemp = root;
+            while (ptemp != null)
+            {
+                int compare = string.Compare(x, ptemp.value, StringComparison.CurrentCulture);
+                if(compare == -1)
+                {
+                    ptemp = ptemp.left;
+                }
+                else if(compare == 1)
+                {
+                    ptemp = ptemp.right;
+                }
+                else if(compare == 0)
+                {
+                    check[0] = ptemp.individualCounter;
+                    check[1] = ptemp.OffsetEstimate;
+                    return check;
+                }
+            }
+            return null;
+        }
+        public bool Increment(AVLNode node, string key)
+        {
+            
+            int order = string.Compare(node.value, key, StringComparison.CurrentCulture);
+            if (order == -1)
+                Increment(node.left, key);
+            else if (order == 1)
+                Increment(node.right, key);
+            else
+            {
+                node.individualCounter++;
+                return true;
+            }
+            return false;
+        }
+        public bool Decrement(AVLNode node, string key)
+        {
+
+            int order = string.Compare(node.value, key, StringComparison.CurrentCulture);
+            if (order == -1)
+                Decrement(node.left, key);
+            else if (order == 1)
+                Decrement(node.right, key);
+            else
+            {
+                node.individualCounter--;
+                return true;
+            }
+            return false;
+        }
         // A utility function to get
         // the height of the tree
         int height(AVLNode N)
@@ -99,7 +126,7 @@ namespace WindowsFormsApp1
             // Return new root
             return x;
         }
-
+        
         // A utility function to left
         // rotate subtree rooted with x
         // See the diagram given above.
@@ -137,16 +164,20 @@ namespace WindowsFormsApp1
             {
 
                 /* 1. Perform the normal BST insertion */
-                if (node == null)
-                    return (new AVLNode(key));
+                if (node == null) 
+                {
+                    count++;
+                    return (new AVLNode(key,count));
+                    
+                }
                 int order = string.Compare(node.value, key, StringComparison.CurrentCulture);
                 if (order == -1)
                     node.left = insert(node.left, key);
                 else if (order == 1)
                     node.right = insert(node.right, key);
-                else // Duplicate keys not allowed
+                else // Duplicate Keys increase count
                 {
-                    node.count++;
+                    node.individualCounter++;
                     return node;
                 }
 
@@ -161,7 +192,7 @@ namespace WindowsFormsApp1
                 int balance = getBalance(node);
 
                 // If this node becomes unbalanced, then there
-                // are 4 cases Left Left Case
+                
                 int leftorder;
                 int rightorder;
                 if (node.left == null)
@@ -180,6 +211,7 @@ namespace WindowsFormsApp1
                 {
                   rightorder = string.Compare(node.right.value, key, StringComparison.CurrentCulture);
                 }
+                // are 4 cases Left Left Case
                 if (balance > 1 && leftorder == 1)
                     return rightRotate(node);
 

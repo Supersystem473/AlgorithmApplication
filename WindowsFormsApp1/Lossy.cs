@@ -11,14 +11,15 @@ namespace WindowsFormsApp1
     {
         private Database database;
         public Node<string> results = new Node<string>();
-        IDictionary<string, int[]> dataSet = new Dictionary<string, int[]>();
+        public IDictionary<string, int[]> dataSet = new Dictionary<string, int[]>();
         private int N = 0;
         private int bucket_width = 0;
-        private double epsilon = 0.0;
+        private double epsilon = 0.001; //user
         private int cBucketId = 1;
         private bool newBuc = false;
         private ProcessStartInfo startInfo = new ProcessStartInfo();
         private Process process;
+        public double s = .5; //user
         public double time;
         public double mem;
         public Lossy(Database db)
@@ -38,6 +39,8 @@ namespace WindowsFormsApp1
                 dataSet.TryGetValue(data, out value);
                 value[0] += 1;
                 dataSet[data] = value;
+
+                // Array[~2][1] += 1;
             }
             else
             {
@@ -69,20 +72,31 @@ namespace WindowsFormsApp1
             }
         }
 
-
+        public string GetResults()
+        {
+            string results = "";
+            foreach (var pair in dataSet)
+            {
+                if (pair.Value[0] >= (s - epsilon) * N)
+                {
+                    results = results + pair.Key + " ";
+                }
+            }
+            return results;
+        }
         public void runAlg()
         {
             Process start = Process.Start(@"C:\Users\jdste\source\repos\AlgorithmApplication\WindowsFormsApp1\Properties\Info.txt");
             
-            epsilon = .1;
+            epsilon = .01; //change to user input
             bucket_width = (int)Math.Ceiling(1 / epsilon);
             //Console.WriteLine(bucket_width);
 
-            for (int i = 1; i < database.DBArray.GetLength(0); i++)
+            for (int i = 0; i < database.DBArray.GetLength(0); i++)
             {
-                for (int j = 1; j < database.DBArray.GetLength(1); j++)
+                for (int j = 0; j < database.DBArray.GetLength(1); j++)
                 {
-                    inDataSet(database.DBArray.GetValue(i,j).ToString());
+                    inDataSet(database.DBArray.GetValue(i+1,j+1).ToString());
                     bucketNum();
                     if (newBuc)
                     {
@@ -90,15 +104,8 @@ namespace WindowsFormsApp1
                     }
                 }
             }
-            Node<string> ptemp = results;
-           
-            foreach (var pair in dataSet)
-            {
-                
-                ptemp.value =  pair.Key + "," + String.Join(", ", pair.Value);
-                //Console.WriteLine("{0},{1}", pair.Key, String.Join(", ", pair.Value));
-                ptemp = ptemp.Next;
-            }
+            
+            
             process = start;
         }
     }

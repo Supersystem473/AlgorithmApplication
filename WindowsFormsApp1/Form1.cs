@@ -46,18 +46,7 @@ namespace WindowsFormsApp1
             //report started lossy
             Lossy lossy = new Lossy(activedatabase);
             Node<string> temp = lossy.results;
-            if(lossy.results == null)
-            {
-                LossyHot.Text = "Inconclusive";
-            }
-            else {
-                LossyHot.Text = "";
-                while (temp != null)
-                {
-                    LossyHot.Text = LossyHot.Text + " " + lossy.results.value;
-                    temp = temp.Next;
-               }
-            }
+            LossyHot.Text = lossy.GetResults();
             LossyMem.Text = lossy.mem.ToString();
             LossyTime.Text = lossy.time.ToString();
             //report finished lossy
@@ -72,7 +61,7 @@ namespace WindowsFormsApp1
                 PRankHot.Text = "";
                 for(int f = 0; f < pr.results.Length; f++)
                 {
-                    PRankHot.Text = PRankHot + " " + pr.results[f];
+                    PRankHot.Text = PRankHot.Text + " " + pr.results[f];
                 }
             }
             PRankMem.Text = pr.mem.ToString();
@@ -83,18 +72,18 @@ namespace WindowsFormsApp1
             //report started Muthu
             //report finished Muthu
             //report Started Misra
-            Misra misra = new Misra(ActiveDB);
-            misra.Algorithm2(ActiveDB);
-            if(misra.A2Results == null)
-            {
-                MisraHot.Text = "Inconclusive";
-            }
-            else
-            {
-                MisraHot.Text = misra.A2Results[0].ToString();
-                MisraMem.Text = misra.mem.ToString() ;
-                MisraTime.Text = misra.time.ToString();
-            }
+            //Misra misra = new Misra(ActiveDB);
+            //misra.Algorithm2(ActiveDB);
+            //if(misra.A2Results == null)
+            //{
+            //    MisraHot.Text = "Inconclusive";
+            //}
+            //else
+            //{
+            //    MisraHot.Text = misra.A2Results[0].ToString();
+            //    MisraMem.Text = misra.mem.ToString() ;
+            //    MisraTime.Text = misra.time.ToString();
+            //}
             //report finished Misra
         }
 
