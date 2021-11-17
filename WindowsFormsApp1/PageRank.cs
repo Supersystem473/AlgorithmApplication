@@ -63,6 +63,7 @@ namespace WindowsFormsApp1
 		/// Convenience wrap for the link matrix transpose and the generator.
 		/// See PageRankGenerator method for parameter descriptions
 		/// </summary>
+		
 		public double[] ComputePageRank()
 		{
 			Vector<double> final = null;

@@ -14,12 +14,12 @@ namespace WindowsFormsApp1
         public IDictionary<string, int[]> dataSet = new Dictionary<string, int[]>();
         private int N = 0;
         private int bucket_width = 0;
-        private double epsilon = 0.001; //user
+        private double epsilon = 0.0001; //user
         private int cBucketId = 1;
         private bool newBuc = false;
         private ProcessStartInfo startInfo = new ProcessStartInfo();
         private Process process;
-        public double s = .5; //user
+        public double s = .039; //user
         public double time;
         public double mem;
         public Lossy(Database db)
@@ -62,7 +62,7 @@ namespace WindowsFormsApp1
 
         public void prune()
         {
-            foreach (var pair in dataSet)
+            foreach (var pair in dataSet.ToList())
             {
                 if (pair.Value[0] + pair.Value[1] <= cBucketId - 1)
                 {
@@ -83,6 +83,20 @@ namespace WindowsFormsApp1
                 }
             }
             return results;
+        }
+        public string GetResultsMost()
+        {
+            int highest = 0;
+            string result = "";
+            foreach (var pair in dataSet)
+            {
+                if (pair.Value[0] > highest)
+                {
+                    highest = pair.Value[0];
+                    result = pair.Key;
+                }
+            }
+            return result;
         }
         public void runAlg()
         {

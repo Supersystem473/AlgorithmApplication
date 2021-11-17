@@ -46,26 +46,26 @@ namespace WindowsFormsApp1
             //report started lossy
             Lossy lossy = new Lossy(activedatabase);
             Node<string> temp = lossy.results;
-            LossyHot.Text = lossy.GetResults();
+            LossyHot.Text = lossy.GetResultsMost();
             LossyMem.Text = lossy.mem.ToString();
             LossyTime.Text = lossy.time.ToString();
             //report finished lossy
             //report started PageRanks
-            PageRank pr = new PageRank(ActiveDB.DBArray);
-            if (pr.results == null)
-            {
-                PRankHot.Text = "Inconclusive";
-            }
-            else
-            {
-                PRankHot.Text = "";
-                for(int f = 0; f < pr.results.Length; f++)
-                {
-                    PRankHot.Text = PRankHot.Text + " " + pr.results[f];
-                }
-            }
-            PRankMem.Text = pr.mem.ToString();
-            PRankTime.Text = pr.time.ToString();
+            //PageRank pr = new PageRank(ActiveDB.DBArray);
+            //if (pr.results == null)
+            //{
+            //    PRankHot.Text = "Inconclusive";
+            //}
+            //else
+            //{
+            //    PRankHot.Text = "";
+            //    for(int f = 0; f < pr.results.Length; f++)
+            //    {
+            //        PRankHot.Text = PRankHot.Text + " " + pr.results[f];
+            //    }
+            //}
+            //PRankMem.Text = pr.mem.ToString();
+            //PRankTime.Text = pr.time.ToString();
             //report finished PageRanks
             //report started NonAdaptive
             //report finished NonAdaptive
