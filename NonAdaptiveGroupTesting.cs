@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace WindowsFormsApp1
@@ -12,17 +11,16 @@ namespace WindowsFormsApp1
          private int numofinsertions
          private bool check;
          private int totalvalue;
-         public string result;
-        public double mem, time;
-        private Process process;
-        private ProcessStartInfo info = new ProcessStartInfo();
-        private System.Array c;
-        public NonAdaptiveGroupTesting(Database db)
+            // call in array 
+            public string bit (int x,int j )
         {
-            c = db.DBArray;
-
-        }
-        public void UpdateCounters(x, trans,c[0][totalvalue])
+           
+                int val = x;
+                string binary = Convert.ToString(val, 2);
+                int length = binary.Length() - 1;
+                return binary[lengh - j] 
+            }
+        public void UpdateCounters( int x, bool trans,c[0][totalvalue])
         {
             if (trans == insertion)
             {
@@ -35,7 +33,7 @@ namespace WindowsFormsApp1
             c[0] = c[0]+d
             for (j = 1, j<totalvalue, j++)
             {
-                c[j] = c[j]+Bit(x,j)*d
+                c[j] = c[j]+bit(x,j)*d
             }
         }
             public void ProcessItem(int x, string tt, int T, int W)
