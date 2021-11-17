@@ -162,8 +162,24 @@ namespace WindowsFormsApp1
 
                 // If this node becomes unbalanced, then there
                 // are 4 cases Left Left Case
-                int leftorder = string.Compare(node.left.value, key, StringComparison.CurrentCulture);
-                int rightorder = string.Compare(node.right.value, key, StringComparison.CurrentCulture);
+                int leftorder;
+                int rightorder;
+                if (node.left == null)
+                {
+                    leftorder = 0;
+                }
+                else
+                {
+                    leftorder = string.Compare(node.left.value, key, StringComparison.CurrentCulture);
+                }
+                if (node.right == null)
+                {
+                    rightorder = 0;
+                }
+                else
+                {
+                  rightorder = string.Compare(node.right.value, key, StringComparison.CurrentCulture);
+                }
                 if (balance > 1 && leftorder == 1)
                     return rightRotate(node);
 

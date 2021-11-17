@@ -1,0 +1,5 @@
+Alphabet Key = AE1
+BoolDB Key = G1
+Random1000names key = G1
+OneThroughFive Key = AG1
+OneThrough50 key = R1

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
 using MathNet.Numerics.LinearAlgebra;
@@ -10,17 +11,32 @@ namespace WindowsFormsApp1
 	{
 		#region Private Fields
 
-		ArrayList _incomingLinks, _leafNodes;
+		ArrayList _incomingLinks, _leafNodes, database = new ArrayList();
 		Vector<double> _numLinks;
 		double _alpha, _convergence;
 		int _checkSteps;
-
+		public double[] results;
+		public double time;
+		public double mem;
+		private ProcessStartInfo info = new ProcessStartInfo();
+		private Process process;
 		#endregion
 
 		#region Constructor
 
-		public PageRank(ArrayList linkMatrix, double alpha = 0.85, double convergence = 0.0001, int checkSteps = 10)
+		public PageRank(System.Array pdb, double alpha = 0.85, double convergence = 0.0001, int checkSteps = 10)
 		{
+			
+			for (int i = 1; i < pdb.GetLength(0); i++)
+            {
+				for(int j = 1; j < pdb.GetLength(1); j++)
+                {
+					database.Add(pdb.GetValue(i,j));
+				}
+				
+            }
+			ArrayList linkMatrix = database;
+			Process start = Process.Start(@"C:\Users\jdste\source\repos\AlgorithmApplication\WindowsFormsApp1\Properties\Info.txt");
 			Tuple<ArrayList, Vector<double>, ArrayList> tuple = TransposeLinkMatrix(linkMatrix);
 			_incomingLinks = tuple.Item1;
 			_numLinks = tuple.Item2;
@@ -28,6 +44,10 @@ namespace WindowsFormsApp1
 			_alpha = alpha;
 			_convergence = convergence;
 			_checkSteps = checkSteps;
+			results = ComputePageRank();
+			process = start;
+			mem = process.VirtualMemorySize64;
+			time = process.TotalProcessorTime.Milliseconds;
 		}
 
 		#endregion
@@ -74,9 +94,14 @@ namespace WindowsFormsApp1
 			ArrayList leafNodes = new ArrayList();
 			for (int i = 0; i < nPages; i++)
 			{
+				//Is this correct
 				List<int> values = outGoingLinks[i] as List<int>;
+				
 				if (values.Count == 0)
+                {
 					leafNodes.Add(i);
+				}
+					
 				else
 				{
 					numLinks[i] = values.Count;
@@ -135,7 +160,7 @@ namespace WindowsFormsApp1
 						oneAv = alpha * Sum(Take(iOld, leafNodes)) / N;
 
 					// the elements of the H x I multiplication
-					for (int j = 0; j < N; j++)
+					for (int j = 0; j <  N; j++)
 					{
 						List<int> page = (List<int>)at[j];
 						double h = 0;
@@ -148,7 +173,6 @@ namespace WindowsFormsApp1
 				}
 				Vector<double> diff = iNew - iOld;
 				done = diff.SumMagnitudes() < convergence;
-
 				yield return iNew;
 			}
 		}
@@ -183,7 +207,6 @@ namespace WindowsFormsApp1
 			Vector<double> result = new DenseVector(vector2.Count);
 			for (int i = 0; i < vector2.Count; i++)
 				result[i] = vector1[Convert.ToInt32(vector2[i])];
-
 			return result;
 		}
 
