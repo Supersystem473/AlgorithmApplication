@@ -158,10 +158,65 @@ namespace WindowsFormsApp1
             return height(N.left) - height(N.right);
         }
 
+        AVLNode minValueNode(AVLNode node)
+        {
+            AVLNode current = node;
 
+            /* loop down to find the leftmost leaf */
+            while (current.left != null)
+                current = current.left;
+
+            return current;
+        }
+        AVLNode deleteNode(AVLNode node, int s)
+        {
+            AVLNode templ, tempr;
+            if(node.left.individualCounter - node.left.OffsetEstimate < s)
+            {
+                
+            }
+            // If the tree had only one node then return
+            if (node == null)
+                return node;
+
+            // STEP 2: UPDATE HEIGHT OF THE CURRENT NODE
+            node.height = max(height(node.left),
+                        height(node.right)) + 1;
+
+            // STEP 3: GET THE BALANCE FACTOR
+            // OF THIS NODE (to check whether
+            // this node became unbalanced)
+            int balance = getBalance(node);
+
+            // If this node becomes unbalanced,
+            // then there are 4 cases
+            // Left Left Case
+            if (balance > 1 && getBalance(node.left) >= 0)
+                return rightRotate(node);
+
+            // Left Right Case
+            if (balance > 1 && getBalance(node.left) < 0)
+            {
+                node.left = leftRotate(node.left);
+                return rightRotate(node);
+            }
+
+            // Right Right Case
+            if (balance < -1 && getBalance(node.right) <= 0)
+                return leftRotate(node);
+
+            // Right Left Case
+            if (balance < -1 && getBalance(node.right) > 0)
+            {
+                node.right = rightRotate(node.right);
+                return leftRotate(node);
+            }
+
+            return node;
+        }
         public AVLNode insert(AVLNode node, string key)
         {
-            {
+            
 
                 /* 1. Perform the normal BST insertion */
                 if (node == null) 
@@ -190,7 +245,7 @@ namespace WindowsFormsApp1
                     node to check whether this node became
                     unbalanced */
                 int balance = getBalance(node);
-
+                
                 // If this node becomes unbalanced, then there
                 
                 int leftorder;
@@ -237,21 +292,35 @@ namespace WindowsFormsApp1
                 return node;
             }
         }
-            
+    public AVLNode RemoveNode(AVLNode node)
+    {
+        AVLNode temp1, temp2;
+        if (node.left == null && node.right == null)
+            return null;
+        else if (node.left != null && node.right == null)
+            return node.left;
+        else if (node.right != null && node.left == null)
+            return node.right;
+        else
+        {
+            temp1 = node.left.right;
+            node.left.right = node.right;
+            temp2 = node.right;
+            while (temp2.left != null)
+            {
+                temp2 = temp2.left;
+            }
+            temp2.left = temp1;
+            node.left.
+        }
+    }
+        
 
         // A utility function to print preorder traversal
         // of the tree.
         // The function also prints height of every node
-        public void preOrder(AVLNode node)
-        {
-            if (node != null)
-            {
-                Console.Write(node.value + " ");
-                preOrder(node.left);
-                preOrder(node.right);
-            }
-        }
+      
     }
-}
+
 
 
