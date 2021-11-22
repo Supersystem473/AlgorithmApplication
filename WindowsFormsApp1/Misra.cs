@@ -101,63 +101,55 @@ namespace WindowsFormsApp1
         //        return z;
         //    }
         //}
-//        //Algorithm 2
-//        public void Algorithm2(Database pdb)
+        //Algorithm 2
+        public void Algorithm2(Database pdb)
 
-//        {
+        {
 
-//            int j = 0, i = 0, k = 0;
-//            database = pdb;
-//            int n = pdb.DBArray.GetLength(0), m = pdb.DBArray.GetLength(1);
-//            string[] remove = new string[2];
-//            int d = 0;
-//            Process start = Process.Start(@"C:\Users\jdste\source\repos\AlgorithmApplication\WindowsFormsApp1\Properties\Info.txt");
-//            while (i != n)
-//            {
-//                while (j != m)
-//                {
-//                    if (T.Count==0)
-//                    {
-//                        T.Add(database.DBArray.GetValue(i + 1, j + 1).ToString(),1);
-//                        d++;
-//                    }
-//                    else
-//                    {
-//                        if (!T.ContainsKey(database.DBArray.GetValue(i + 1, j + 1).ToString()))
-//                        {
-//                            d++;
-//                        }
-//                        T.Add(database.DBArray.GetValue(i + 1, j + 1).ToString(),1);
+            int j = 0, i = 0, k = 0;
+            database = pdb;
+            int n = pdb.DBArray.GetLength(0), m = pdb.DBArray.GetLength(1);
+            string[] remove = new string[2];
+            int d = 0;
+            Process start = Process.Start(@"C:\Users\jdste\source\repos\AlgorithmApplication\WindowsFormsApp1\Properties\Info.txt");
+            while (i != n)
+            {
+                while (j != m)
+                {
+                    if (T.Count == 0)
+                    {
+                        T.Add(database.DBArray.GetValue(i + 1, j + 1).ToString(), 1);
+                        d++;
+                    }
+                    else
+                    {
+                        if (!T.ContainsKey(database.DBArray.GetValue(i + 1, j + 1).ToString()))
+                        {
+                            d++;
+                        }
+                        T.Add(database.DBArray.GetValue(i + 1, j + 1).ToString(), 1);
 
-//                    }
-//                    if (d == 2)
-//                    {
-//                        t.RemoveAt(t.Size - 1);
-//                        k = 1;
-//                        for (int g = 0; g < t.Size; g++)
-//                        {
-//                            if (t[g].ToString() != remove[0])
-//                            {
+                    }
+                    if (d == 2)
+                    {
 
-//                                t.RemoveAt(g);
-//                                g = t.Size;
-//                            }
-//                        }
-//                    }
-//                    j++;
+                    }
+                    j++;
 
-//                }
-//                j = 0;
-//                i++;
-//            }
-//            process = start;
-//            A2Results = t;
-//            mem = process.VirtualMemorySize64;
-//            time = process.TotalProcessorTime.TotalMilliseconds;
+                }
+                j = 0;
+                i++;
+            }
+            process = start;
+            //A2Results = t;
+            mem = process.VirtualMemorySize64;
+            time = process.TotalProcessorTime.TotalMilliseconds;
 
-//        }
-//}
-
-
+        }
     }
+
+
 }
+
+
+

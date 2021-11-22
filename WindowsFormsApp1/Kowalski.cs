@@ -27,7 +27,7 @@ namespace WindowsFormsApp1
         }
         public void CreateDisperser()
         {
-            G = new Disperser(database,epsilon,gama,delta);
+            G = new Disperser(database, epsilon, gama, delta);
         }
         public void CreateBalancedTree()
         {
@@ -42,22 +42,22 @@ namespace WindowsFormsApp1
                     }
                     int gmin = 0;
                     //calculate gmin
-                    for(int f = 0; f < G.GroupCounterSet.Count; f++)
+                    for (int f = 0; f < G.GroupCounterSet.Count; f++)
                     {
-                        if(gmin > G.GroupCounterSet.ElementAt(f).Value.Count)
+                        if (gmin > G.GroupCounterSet.ElementAt(f).Value.Count)
                         {
                             // Disperser >> Directory >> Goes to index 'f' >> Gets List at f >> gets count of values in list
                             gmin = G.GroupCounterSet.ElementAt(f).Value.Count;
                         }
                     }
-                    if(gmin < gama*G.GroupCounterSet.Count)
-                    {
-                        if(C.Size() == delta / (epsilon * gama))
-                        {
-                            C.remove_small(G.GroupCounterSet.Count*gama);
-                        }
-                        C.insert(C.root, x);
-                    }
+                    //if (gmin < gama * G.GroupCounterSet.Count)
+                    //{
+                    //    if (C.Size() == delta / (epsilon * gama))
+                    //    {
+                    //        C.remove_small(G.GroupCounterSet.Count * gama);
+                    //    }
+                    //    C.insert(C.root, x);
+                    //}
 
                 }
             }
@@ -65,9 +65,10 @@ namespace WindowsFormsApp1
         public void HandleOp(operation op, string x)
         {
 
+
         }
+        
     }
-    
 }
 
 

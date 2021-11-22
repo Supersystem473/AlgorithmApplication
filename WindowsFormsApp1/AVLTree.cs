@@ -15,7 +15,7 @@ namespace WindowsFormsApp1
         public int OffsetEstimate
         {
             get { return offsetEstimate; }
-        } 
+        }
         public AVLNode(string d, int pcount)
         {
             offsetEstimate = pcount;
@@ -41,15 +41,15 @@ namespace WindowsFormsApp1
             while (ptemp != null)
             {
                 int compare = string.Compare(x, ptemp.value, StringComparison.CurrentCulture);
-                if(compare == -1)
+                if (compare == -1)
                 {
                     ptemp = ptemp.left;
                 }
-                else if(compare == 1)
+                else if (compare == 1)
                 {
                     ptemp = ptemp.right;
                 }
-                else if(compare == 0)
+                else if (compare == 0)
                 {
                     check[0] = ptemp.individualCounter;
                     check[1] = ptemp.OffsetEstimate;
@@ -60,7 +60,7 @@ namespace WindowsFormsApp1
         }
         public bool Increment(AVLNode node, string key)
         {
-            
+
             int order = string.Compare(node.value, key, StringComparison.CurrentCulture);
             if (order == -1)
                 Increment(node.left, key);
@@ -126,7 +126,7 @@ namespace WindowsFormsApp1
             // Return new root
             return x;
         }
-        
+
         // A utility function to left
         // rotate subtree rooted with x
         // See the diagram given above.
@@ -171,9 +171,9 @@ namespace WindowsFormsApp1
         AVLNode deleteNode(AVLNode node, int s)
         {
             AVLNode templ, tempr;
-            if(node.left.individualCounter - node.left.OffsetEstimate < s)
+            if (node.left.individualCounter - node.left.OffsetEstimate < s)
             {
-                
+
             }
             // If the tree had only one node then return
             if (node == null)
@@ -216,111 +216,106 @@ namespace WindowsFormsApp1
         }
         public AVLNode insert(AVLNode node, string key)
         {
-            
-
-                /* 1. Perform the normal BST insertion */
-                if (node == null) 
-                {
-                    count++;
-                    return (new AVLNode(key,count));
-                    
-                }
-                int order = string.Compare(node.value, key, StringComparison.CurrentCulture);
-                if (order == -1)
-                    node.left = insert(node.left, key);
-                else if (order == 1)
-                    node.right = insert(node.right, key);
-                else // Duplicate Keys increase count
-                {
-                    node.individualCounter++;
-                    return node;
-                }
 
 
-                /* 2. Update height of this ancestor node */
-                node.height = 1 + max(height(node.left),
-                                height(node.right));
+            /* 1. Perform the normal BST insertion */
+            if (node == null)
+            {
+                count++;
+                return (new AVLNode(key, count));
 
-                /* 3. Get the balance factor of this ancestor
-                    node to check whether this node became
-                    unbalanced */
-                int balance = getBalance(node);
-                
-                // If this node becomes unbalanced, then there
-                
-                int leftorder;
-                int rightorder;
-                if (node.left == null)
-                {
-                    leftorder = 0;
-                }
-                else
-                {
-                    leftorder = string.Compare(node.left.value, key, StringComparison.CurrentCulture);
-                }
-                if (node.right == null)
-                {
-                    rightorder = 0;
-                }
-                else
-                {
-                  rightorder = string.Compare(node.right.value, key, StringComparison.CurrentCulture);
-                }
-                // are 4 cases Left Left Case
-                if (balance > 1 && leftorder == 1)
-                    return rightRotate(node);
-
-                // Right Right Case
-                if (balance < -1 && rightorder == -1)
-                    return leftRotate(node);
-
-                // Left Right Case
-                if (balance > 1 && leftorder == 1)
-                {
-                    node.left = leftRotate(node.left);
-                    return rightRotate(node);
-                }
-
-                // Right Left Case
-                if (balance < -1 && rightorder == -1)
-                {
-                    node.right = rightRotate(node.right);
-                    return leftRotate(node);
-                }
-
-                /* return the (unchanged) node pointer */
+            }
+            int order = string.Compare(node.value, key, StringComparison.CurrentCulture);
+            if (order == -1)
+                node.left = insert(node.left, key);
+            else if (order == 1)
+                node.right = insert(node.right, key);
+            else // Duplicate Keys increase count
+            {
+                node.individualCounter++;
                 return node;
             }
-        }
-    public AVLNode RemoveNode(AVLNode node)
-    {
-        AVLNode temp1, temp2;
-        if (node.left == null && node.right == null)
-            return null;
-        else if (node.left != null && node.right == null)
-            return node.left;
-        else if (node.right != null && node.left == null)
-            return node.right;
-        else
-        {
-            temp1 = node.left.right;
-            node.left.right = node.right;
-            temp2 = node.right;
-            while (temp2.left != null)
-            {
-                temp2 = temp2.left;
-            }
-            temp2.left = temp1;
-            node.left.
-        }
-    }
-        
 
-        // A utility function to print preorder traversal
-        // of the tree.
-        // The function also prints height of every node
-      
+
+            /* 2. Update height of this ancestor node */
+            node.height = 1 + max(height(node.left),
+                            height(node.right));
+
+            /* 3. Get the balance factor of this ancestor
+                node to check whether this node became
+                unbalanced */
+            int balance = getBalance(node);
+
+            // If this node becomes unbalanced, then there
+
+            int leftorder;
+            int rightorder;
+            if (node.left == null)
+            {
+                leftorder = 0;
+            }
+            else
+            {
+                leftorder = string.Compare(node.left.value, key, StringComparison.CurrentCulture);
+            }
+            if (node.right == null)
+            {
+                rightorder = 0;
+            }
+            else
+            {
+                rightorder = string.Compare(node.right.value, key, StringComparison.CurrentCulture);
+            }
+            // are 4 cases Left Left Case
+            if (balance > 1 && leftorder == 1)
+                return rightRotate(node);
+
+            // Right Right Case
+            if (balance < -1 && rightorder == -1)
+                return leftRotate(node);
+
+            // Left Right Case
+            if (balance > 1 && leftorder == 1)
+            {
+                node.left = leftRotate(node.left);
+                return rightRotate(node);
+            }
+
+            // Right Left Case
+            if (balance < -1 && rightorder == -1)
+            {
+                node.right = rightRotate(node.right);
+                return leftRotate(node);
+            }
+
+            /* return the (unchanged) node pointer */
+            return node;
+        }
     }
+    /* public AVLNode RemoveNode(AVLNode node)
+     {
+         AVLNode temp1, temp2;
+         if (node.left == null && node.right == null)
+             return null;
+         else if (node.left != null && node.right == null)
+             return node.left;
+         else if (node.right != null && node.left == null)
+             return node.right;
+         else
+         {
+             temp1 = node.left.right;
+             node.left.right = node.right;
+             temp2 = node.right;
+             while (temp2.left != null)
+             {
+                 temp2 = temp2.left;
+             }
+             temp2.left = temp1;
+         }
+     }
+
+     */
+}
 
 
 
