@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Linq;
 
 namespace WindowsFormsApp1
 {
@@ -17,7 +15,7 @@ namespace WindowsFormsApp1
         private double epsilon = 0.0001; //user
         private int cBucketId = 1;
         private bool newBuc = false;
-        private ProcessStartInfo startInfo = new ProcessStartInfo();
+       
         private Process process;
         public double s = .039; //user
         public double time;
@@ -26,8 +24,8 @@ namespace WindowsFormsApp1
         {
             database = db;
             runAlg();
-            mem = process.VirtualMemorySize64;
-            time = process.TotalProcessorTime.Milliseconds;
+            
+           
         }
 
 
@@ -100,8 +98,7 @@ namespace WindowsFormsApp1
         }
         public void runAlg()
         {
-            Process start = Process.Start(@"C:\Users\jdste\source\repos\AlgorithmApplication\WindowsFormsApp1\Properties\Info.txt");
-            
+           
             epsilon = .01; //change to user input
             bucket_width = (int)Math.Ceiling(1 / epsilon);
             //Console.WriteLine(bucket_width);
@@ -110,7 +107,7 @@ namespace WindowsFormsApp1
             {
                 for (int j = 0; j < database.DBArray.GetLength(1); j++)
                 {
-                    inDataSet(database.DBArray.GetValue(i+1,j+1).ToString());
+                    inDataSet(database.DBArray.GetValue(i + 1, j + 1).ToString());
                     bucketNum();
                     if (newBuc)
                     {
@@ -118,9 +115,8 @@ namespace WindowsFormsApp1
                     }
                 }
             }
-            
-            
-            process = start;
+
+
         }
     }
 }

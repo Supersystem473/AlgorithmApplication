@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WindowsFormsApp1
 {
@@ -62,11 +58,9 @@ namespace WindowsFormsApp1
         {
 
             int order = string.Compare(node.value, key, StringComparison.CurrentCulture);
-            if (order == -1)
-                Increment(node.left, key);
-            else if (order == 1)
-                Increment(node.right, key);
-            else
+            if (order == -1 && node.left != null && Increment(node.left, key)){ }
+            else if (order == 1 && node.right != null && Increment(node.right, key)) { }
+            else if (order == 0)
             {
                 node.individualCounter++;
                 return true;
@@ -87,6 +81,150 @@ namespace WindowsFormsApp1
                 return true;
             }
             return false;
+        }
+        public void DecrementAll(AVLNode ptemp)
+        {
+            if(ptemp.left != null)
+            {
+                DecrementAll(ptemp.left);
+                ptemp.left.individualCounter--;
+                if(ptemp.left.individualCounter == 0)
+                {
+                    RemoveLeft(ptemp, ptemp.left);
+                }
+            }
+            if(ptemp.right != null)
+            {
+                DecrementAll(ptemp.right);
+                ptemp.right.individualCounter--;
+                if(ptemp.right.individualCounter == 0)
+                {
+                    RemoveRight(ptemp, ptemp.right);
+                }
+            }
+            if (ptemp == root)
+            {
+                ptemp.individualCounter--;
+                if(ptemp.individualCounter == 0)
+                {
+                    RemoveRoot(ptemp);
+                }
+            }
+        }
+        public void RemoveRoot(AVLNode node)
+        {
+            AVLNode x = null;
+            AVLNode y = null;
+            if(node.right == null && node.left == null)
+            {
+                root = null;
+            }
+            else if(node.right != null && node.left == null)
+            {
+                root = node.right;
+            }
+            else if(node.left != null && node.right == null)
+            {
+                root = node.left;
+            }
+            else
+            {
+                x = node.right;
+                
+                while(x.left!= null)
+                {
+                    y = x;
+                    x = x.left;
+                }
+                if(x.right != null)
+                {
+                    y.left = x.right;
+                }
+                x.left = root.left;
+                x.right = root.right;
+                root = x;
+            }
+        }
+        public void RemoveRight(AVLNode parent, AVLNode node)
+        {
+            AVLNode x;
+            AVLNode Y;
+            if (node.right == null && node.left == null)
+            {
+                parent.right = null;
+            }
+            else if (node.right != null && node.left == null)
+            {
+                parent.right = node.right;
+            }
+            else if (node.left != null && node.right == null)
+            {
+                parent.right = node.left;
+            }
+            else
+            {
+                x = node.right;
+                Y = node;
+                while(node.left != null)
+                {
+                    Y = x;
+                    x = x.left;
+                }
+                if(x.right != null)
+                {
+                    Y.left = x.right;
+                }
+                parent.right = x;
+                x.left = node.left;
+                x.right = node.right;
+            }
+        }
+        public void RemoveLeft(AVLNode parent, AVLNode node)
+        {
+            AVLNode x;
+            AVLNode Y;
+            if (node.right == null && node.left == null)
+            {
+                parent.left = null;
+            }
+            else if (node.right != null && node.left == null)
+            {
+                parent.left = node.right;
+            }
+            else if (node.left != null && node.right == null)
+            {
+                parent.left = node.left;
+            }
+            else
+            {
+                x = node.right ;
+                Y = node;
+                while (node.left != null)
+                {
+                    Y = x;
+                    x = x.left;
+                }
+                if (x.right != null)
+                {
+                    Y.left = x.right;
+                }
+                parent.left = x;
+                x.left = node.left;
+                x.right = node.right;
+            }
+        }
+        public string Results(AVLNode node)
+        {
+            string results = node.value;
+            if (node.left != null)
+            {
+                results = results + "," + Results(node.left);
+            }
+            if(node.right != null)
+            {
+                results = results + "," + Results(node.right);
+            }
+            return results;
         }
         // A utility function to get
         // the height of the tree
