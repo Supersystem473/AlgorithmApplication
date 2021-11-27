@@ -6,6 +6,13 @@ namespace WindowsFormsApp1
         /// <summary>
         /// Required designer variable.
         /// </summary>
+        public double percentage = .05;
+        public double k;
+        public bool RunNonadaptive;
+        private int phi;
+        public int delta;
+        int NAk, Misrak;
+        private double epsilon, gama;
         private System.ComponentModel.IContainer components = null;
         public Database BoolDB = new Database("BoolDB",1,7,"A1","A500");
         public Database OneToFifty = new Database("onethrough50",1,18,"A1","N350");
@@ -37,32 +44,35 @@ namespace WindowsFormsApp1
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.KowalskiAllHot = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.GamaInput = new System.Windows.Forms.NumericUpDown();
+            this.label9 = new System.Windows.Forms.Label();
+            this.EpsilonInput = new System.Windows.Forms.NumericUpDown();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.KowalskiTime = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.KowalskiMem = new System.Windows.Forms.Label();
-            this.KowalskiHot = new System.Windows.Forms.Label();
+            this.PhiInput = new System.Windows.Forms.NumericUpDown();
+            this.DeltaInput = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label60 = new System.Windows.Forms.Label();
             this.label61 = new System.Windows.Forms.Label();
             this.label62 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.PRankTime = new System.Windows.Forms.Label();
-            this.PRankMem = new System.Windows.Forms.Label();
-            this.PRankHot = new System.Windows.Forms.Label();
+            this.BoyerTime = new System.Windows.Forms.Label();
+            this.BoyerMem = new System.Windows.Forms.Label();
+            this.BoyerHot = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.label10 = new System.Windows.Forms.Label();
+            this.MisrakInput = new System.Windows.Forms.NumericUpDown();
             this.MisraTime = new System.Windows.Forms.Label();
             this.MisraMem = new System.Windows.Forms.Label();
             this.MisraHot = new System.Windows.Forms.Label();
@@ -70,7 +80,9 @@ namespace WindowsFormsApp1
             this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.label11 = new System.Windows.Forms.Label();
             this.MuthuNATime = new System.Windows.Forms.Label();
+            this.NAkInput = new System.Windows.Forms.NumericUpDown();
             this.MuthuNAMem = new System.Windows.Forms.Label();
             this.MuthuNAHot = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
@@ -88,99 +100,225 @@ namespace WindowsFormsApp1
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.MemChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.TimeChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.label65 = new System.Windows.Forms.Label();
-            this.label66 = new System.Windows.Forms.Label();
             this.panel9 = new System.Windows.Forms.Panel();
             this.ControlKey = new System.Windows.Forms.Label();
             this.label71 = new System.Windows.Forms.Label();
             this.label67 = new System.Windows.Forms.Label();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.GamaInput)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.EpsilonInput)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PhiInput)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DeltaInput)).BeginInit();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MisrakInput)).BeginInit();
             this.panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NAkInput)).BeginInit();
             this.panel5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MemChart)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TimeChart)).BeginInit();
             this.panel9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // richTextBox1
-            // 
-            this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBox1.Location = new System.Drawing.Point(12, 104);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(238, 146);
-            this.richTextBox1.TabIndex = 0;
-            this.richTextBox1.Text = "";
             // 
             // panel1
             // 
             this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.KowalskiAllHot);
+            this.panel1.Controls.Add(this.label15);
+            this.panel1.Controls.Add(this.GamaInput);
+            this.panel1.Controls.Add(this.label9);
+            this.panel1.Controls.Add(this.EpsilonInput);
+            this.panel1.Controls.Add(this.label8);
+            this.panel1.Controls.Add(this.label7);
             this.panel1.Controls.Add(this.KowalskiTime);
+            this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.KowalskiMem);
-            this.panel1.Controls.Add(this.KowalskiHot);
+            this.panel1.Controls.Add(this.PhiInput);
+            this.panel1.Controls.Add(this.DeltaInput);
             this.panel1.Controls.Add(this.label5);
-            this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.label3);
-            this.panel1.Location = new System.Drawing.Point(757, 133);
+            this.panel1.Location = new System.Drawing.Point(11, 192);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(218, 117);
+            this.panel1.Size = new System.Drawing.Size(218, 370);
             this.panel1.TabIndex = 1;
+            // 
+            // KowalskiAllHot
+            // 
+            this.KowalskiAllHot.AutoSize = true;
+            this.KowalskiAllHot.Location = new System.Drawing.Point(38, 46);
+            this.KowalskiAllHot.Name = "KowalskiAllHot";
+            this.KowalskiAllHot.Size = new System.Drawing.Size(117, 17);
+            this.KowalskiAllHot.TabIndex = 39;
+            this.KowalskiAllHot.Text = "{Returned Value}";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(21, 20);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(165, 17);
+            this.label15.TabIndex = 38;
+            this.label15.Text = "Hot Items past threshold:";
+            // 
+            // GamaInput
+            // 
+            this.GamaInput.DecimalPlaces = 2;
+            this.GamaInput.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.GamaInput.Location = new System.Drawing.Point(127, 297);
+            this.GamaInput.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.GamaInput.Name = "GamaInput";
+            this.GamaInput.Size = new System.Drawing.Size(61, 22);
+            this.GamaInput.TabIndex = 37;
+            this.GamaInput.Value = new decimal(new int[] {
+            85,
+            0,
+            0,
+            65536});
+            this.GamaInput.ValueChanged += new System.EventHandler(this.GamaInput_ValueChanged);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(9, 297);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(112, 17);
+            this.label9.TabIndex = 36;
+            this.label9.Text = "Gama = Epsilon/";
+            // 
+            // EpsilonInput
+            // 
+            this.EpsilonInput.DecimalPlaces = 2;
+            this.EpsilonInput.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.EpsilonInput.Location = new System.Drawing.Point(69, 257);
+            this.EpsilonInput.Maximum = new decimal(new int[] {
+            49,
+            0,
+            0,
+            131072});
+            this.EpsilonInput.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.EpsilonInput.Name = "EpsilonInput";
+            this.EpsilonInput.Size = new System.Drawing.Size(61, 22);
+            this.EpsilonInput.TabIndex = 35;
+            this.EpsilonInput.Value = new decimal(new int[] {
+            20,
+            0,
+            0,
+            131072});
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(9, 262);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(54, 17);
+            this.label8.TabIndex = 34;
+            this.label8.Text = "Epsilon";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(9, 185);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(28, 17);
+            this.label7.TabIndex = 34;
+            this.label7.Text = "Phi";
             // 
             // KowalskiTime
             // 
             this.KowalskiTime.AutoSize = true;
-            this.KowalskiTime.Location = new System.Drawing.Point(111, 72);
+            this.KowalskiTime.Location = new System.Drawing.Point(100, 101);
             this.KowalskiTime.Name = "KowalskiTime";
             this.KowalskiTime.Size = new System.Drawing.Size(86, 17);
             this.KowalskiTime.TabIndex = 5;
             this.KowalskiTime.Text = "{Time in ms}";
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(9, 224);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(41, 17);
+            this.label6.TabIndex = 33;
+            this.label6.Text = "Delta";
+            // 
             // KowalskiMem
             // 
             this.KowalskiMem.AutoSize = true;
-            this.KowalskiMem.Location = new System.Drawing.Point(114, 46);
+            this.KowalskiMem.Location = new System.Drawing.Point(108, 72);
             this.KowalskiMem.Name = "KowalskiMem";
-            this.KowalskiMem.Size = new System.Drawing.Size(83, 17);
+            this.KowalskiMem.Size = new System.Drawing.Size(88, 17);
             this.KowalskiMem.TabIndex = 4;
-            this.KowalskiMem.Text = "{RAM used}";
+            this.KowalskiMem.Text = "{Bytes used}";
             // 
-            // KowalskiHot
+            // PhiInput
             // 
-            this.KowalskiHot.AutoSize = true;
-            this.KowalskiHot.Location = new System.Drawing.Point(100, 20);
-            this.KowalskiHot.Name = "KowalskiHot";
-            this.KowalskiHot.Size = new System.Drawing.Size(117, 17);
-            this.KowalskiHot.TabIndex = 3;
-            this.KowalskiHot.Text = "{Returned Value}";
+            this.PhiInput.Location = new System.Drawing.Point(69, 185);
+            this.PhiInput.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.PhiInput.Name = "PhiInput";
+            this.PhiInput.Size = new System.Drawing.Size(61, 22);
+            this.PhiInput.TabIndex = 32;
+            this.PhiInput.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.PhiInput.ValueChanged += new System.EventHandler(this.PhiInput_ValueChanged);
+            // 
+            // DeltaInput
+            // 
+            this.DeltaInput.Location = new System.Drawing.Point(69, 222);
+            this.DeltaInput.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.DeltaInput.Name = "DeltaInput";
+            this.DeltaInput.Size = new System.Drawing.Size(61, 22);
+            this.DeltaInput.TabIndex = 31;
+            this.DeltaInput.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.DeltaInput.ValueChanged += new System.EventHandler(this.DeltaInput_ValueChanged);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(9, 46);
+            this.label5.Location = new System.Drawing.Point(3, 72);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(99, 17);
             this.label5.TabIndex = 2;
             this.label5.Text = "Memory Used:";
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(9, 20);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(64, 17);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "Hot Item:";
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(9, 72);
+            this.label3.Location = new System.Drawing.Point(3, 101);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(64, 17);
             this.label3.TabIndex = 0;
@@ -189,7 +327,7 @@ namespace WindowsFormsApp1
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(806, 113);
+            this.label2.Location = new System.Drawing.Point(60, 172);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(125, 17);
             this.label2.TabIndex = 2;
@@ -198,7 +336,7 @@ namespace WindowsFormsApp1
             // label60
             // 
             this.label60.AutoSize = true;
-            this.label60.Location = new System.Drawing.Point(806, 258);
+            this.label60.Location = new System.Drawing.Point(1054, 172);
             this.label60.Name = "label60";
             this.label60.Size = new System.Drawing.Size(105, 17);
             this.label60.TabIndex = 16;
@@ -207,7 +345,7 @@ namespace WindowsFormsApp1
             // label61
             // 
             this.label61.AutoSize = true;
-            this.label61.Location = new System.Drawing.Point(519, 258);
+            this.label61.Location = new System.Drawing.Point(767, 172);
             this.label61.Name = "label61";
             this.label61.Size = new System.Drawing.Size(205, 17);
             this.label61.TabIndex = 17;
@@ -216,7 +354,7 @@ namespace WindowsFormsApp1
             // label62
             // 
             this.label62.AutoSize = true;
-            this.label62.Location = new System.Drawing.Point(316, 258);
+            this.label62.Location = new System.Drawing.Point(302, 172);
             this.label62.Name = "label62";
             this.label62.Size = new System.Drawing.Size(108, 17);
             this.label62.TabIndex = 18;
@@ -226,43 +364,43 @@ namespace WindowsFormsApp1
             // 
             this.panel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Controls.Add(this.PRankTime);
-            this.panel2.Controls.Add(this.PRankMem);
-            this.panel2.Controls.Add(this.PRankHot);
+            this.panel2.Controls.Add(this.BoyerTime);
+            this.panel2.Controls.Add(this.BoyerMem);
+            this.panel2.Controls.Add(this.BoyerHot);
             this.panel2.Controls.Add(this.label12);
             this.panel2.Controls.Add(this.label13);
             this.panel2.Controls.Add(this.label14);
-            this.panel2.Location = new System.Drawing.Point(12, 278);
+            this.panel2.Location = new System.Drawing.Point(501, 192);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(218, 117);
+            this.panel2.Size = new System.Drawing.Size(218, 370);
             this.panel2.TabIndex = 6;
             // 
-            // PRankTime
+            // BoyerTime
             // 
-            this.PRankTime.AutoSize = true;
-            this.PRankTime.Location = new System.Drawing.Point(111, 72);
-            this.PRankTime.Name = "PRankTime";
-            this.PRankTime.Size = new System.Drawing.Size(86, 17);
-            this.PRankTime.TabIndex = 5;
-            this.PRankTime.Text = "{Time in ms}";
+            this.BoyerTime.AutoSize = true;
+            this.BoyerTime.Location = new System.Drawing.Point(111, 72);
+            this.BoyerTime.Name = "BoyerTime";
+            this.BoyerTime.Size = new System.Drawing.Size(86, 17);
+            this.BoyerTime.TabIndex = 5;
+            this.BoyerTime.Text = "{Time in ms}";
             // 
-            // PRankMem
+            // BoyerMem
             // 
-            this.PRankMem.AutoSize = true;
-            this.PRankMem.Location = new System.Drawing.Point(114, 46);
-            this.PRankMem.Name = "PRankMem";
-            this.PRankMem.Size = new System.Drawing.Size(83, 17);
-            this.PRankMem.TabIndex = 4;
-            this.PRankMem.Text = "{RAM used}";
+            this.BoyerMem.AutoSize = true;
+            this.BoyerMem.Location = new System.Drawing.Point(114, 46);
+            this.BoyerMem.Name = "BoyerMem";
+            this.BoyerMem.Size = new System.Drawing.Size(88, 17);
+            this.BoyerMem.TabIndex = 4;
+            this.BoyerMem.Text = "{Bytes used}";
             // 
-            // PRankHot
+            // BoyerHot
             // 
-            this.PRankHot.AutoSize = true;
-            this.PRankHot.Location = new System.Drawing.Point(100, 20);
-            this.PRankHot.Name = "PRankHot";
-            this.PRankHot.Size = new System.Drawing.Size(117, 17);
-            this.PRankHot.TabIndex = 3;
-            this.PRankHot.Text = "{Returned Value}";
+            this.BoyerHot.AutoSize = true;
+            this.BoyerHot.Location = new System.Drawing.Point(100, 20);
+            this.BoyerHot.Name = "BoyerHot";
+            this.BoyerHot.Size = new System.Drawing.Size(117, 17);
+            this.BoyerHot.TabIndex = 3;
+            this.BoyerHot.Text = "{Returned Value}";
             // 
             // label12
             // 
@@ -295,16 +433,46 @@ namespace WindowsFormsApp1
             // 
             this.panel3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel3.Controls.Add(this.label10);
+            this.panel3.Controls.Add(this.MisrakInput);
             this.panel3.Controls.Add(this.MisraTime);
             this.panel3.Controls.Add(this.MisraMem);
             this.panel3.Controls.Add(this.MisraHot);
             this.panel3.Controls.Add(this.label18);
             this.panel3.Controls.Add(this.label19);
             this.panel3.Controls.Add(this.label20);
-            this.panel3.Location = new System.Drawing.Point(757, 278);
+            this.panel3.Location = new System.Drawing.Point(1005, 192);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(218, 117);
+            this.panel3.Size = new System.Drawing.Size(218, 370);
             this.panel3.TabIndex = 6;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(9, 135);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(15, 17);
+            this.label10.TabIndex = 38;
+            this.label10.Text = "k";
+            // 
+            // MisrakInput
+            // 
+            this.MisrakInput.DecimalPlaces = 2;
+            this.MisrakInput.Location = new System.Drawing.Point(71, 133);
+            this.MisrakInput.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.MisrakInput.Name = "MisrakInput";
+            this.MisrakInput.Size = new System.Drawing.Size(61, 22);
+            this.MisrakInput.TabIndex = 38;
+            this.MisrakInput.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.MisrakInput.ValueChanged += new System.EventHandler(this.MisrakInput_ValueChanged);
             // 
             // MisraTime
             // 
@@ -320,9 +488,9 @@ namespace WindowsFormsApp1
             this.MisraMem.AutoSize = true;
             this.MisraMem.Location = new System.Drawing.Point(114, 46);
             this.MisraMem.Name = "MisraMem";
-            this.MisraMem.Size = new System.Drawing.Size(83, 17);
+            this.MisraMem.Size = new System.Drawing.Size(88, 17);
             this.MisraMem.TabIndex = 4;
-            this.MisraMem.Text = "{RAM used}";
+            this.MisraMem.Text = "{Bytes used}";
             // 
             // MisraHot
             // 
@@ -364,16 +532,27 @@ namespace WindowsFormsApp1
             // 
             this.panel4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel4.Controls.Add(this.label11);
             this.panel4.Controls.Add(this.MuthuNATime);
+            this.panel4.Controls.Add(this.NAkInput);
             this.panel4.Controls.Add(this.MuthuNAMem);
             this.panel4.Controls.Add(this.MuthuNAHot);
             this.panel4.Controls.Add(this.label24);
             this.panel4.Controls.Add(this.label25);
             this.panel4.Controls.Add(this.label26);
-            this.panel4.Location = new System.Drawing.Point(509, 278);
+            this.panel4.Location = new System.Drawing.Point(757, 192);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(218, 117);
+            this.panel4.Size = new System.Drawing.Size(218, 370);
             this.panel4.TabIndex = 6;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(9, 135);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(15, 17);
+            this.label11.TabIndex = 39;
+            this.label11.Text = "k";
             // 
             // MuthuNATime
             // 
@@ -384,14 +563,38 @@ namespace WindowsFormsApp1
             this.MuthuNATime.TabIndex = 5;
             this.MuthuNATime.Text = "{Time in ms}";
             // 
+            // NAkInput
+            // 
+            this.NAkInput.DecimalPlaces = 2;
+            this.NAkInput.Location = new System.Drawing.Point(68, 133);
+            this.NAkInput.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.NAkInput.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.NAkInput.Name = "NAkInput";
+            this.NAkInput.Size = new System.Drawing.Size(74, 22);
+            this.NAkInput.TabIndex = 40;
+            this.NAkInput.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.NAkInput.ValueChanged += new System.EventHandler(this.NAkInput_ValueChanged);
+            // 
             // MuthuNAMem
             // 
             this.MuthuNAMem.AutoSize = true;
             this.MuthuNAMem.Location = new System.Drawing.Point(114, 46);
             this.MuthuNAMem.Name = "MuthuNAMem";
-            this.MuthuNAMem.Size = new System.Drawing.Size(83, 17);
+            this.MuthuNAMem.Size = new System.Drawing.Size(88, 17);
             this.MuthuNAMem.TabIndex = 4;
-            this.MuthuNAMem.Text = "{RAM used}";
+            this.MuthuNAMem.Text = "{Bytes used}";
             // 
             // MuthuNAHot
             // 
@@ -439,9 +642,9 @@ namespace WindowsFormsApp1
             this.panel5.Controls.Add(this.label30);
             this.panel5.Controls.Add(this.label31);
             this.panel5.Controls.Add(this.label32);
-            this.panel5.Location = new System.Drawing.Point(270, 278);
+            this.panel5.Location = new System.Drawing.Point(256, 192);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(218, 117);
+            this.panel5.Size = new System.Drawing.Size(218, 370);
             this.panel5.TabIndex = 6;
             // 
             // LossyTime
@@ -458,9 +661,9 @@ namespace WindowsFormsApp1
             this.LossyMem.AutoSize = true;
             this.LossyMem.Location = new System.Drawing.Point(114, 46);
             this.LossyMem.Name = "LossyMem";
-            this.LossyMem.Size = new System.Drawing.Size(83, 17);
+            this.LossyMem.Size = new System.Drawing.Size(88, 17);
             this.LossyMem.TabIndex = 4;
-            this.LossyMem.Text = "{RAM used}";
+            this.LossyMem.Text = "{Bytes used}";
             // 
             // LossyHot
             // 
@@ -501,11 +704,11 @@ namespace WindowsFormsApp1
             // label33
             // 
             this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(51, 258);
+            this.label33.Location = new System.Drawing.Point(540, 172);
             this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(137, 17);
+            this.label33.Size = new System.Drawing.Size(153, 17);
             this.label33.TabIndex = 21;
-            this.label33.Text = "PageRank Algorithm";
+            this.label33.Text = "Boyer-Moore Algorithm";
             // 
             // DBSelector
             // 
@@ -551,67 +754,13 @@ namespace WindowsFormsApp1
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
-            // MemChart
-            // 
-            chartArea3.Name = "ChartArea1";
-            this.MemChart.ChartAreas.Add(chartArea3);
-            legend3.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
-            legend3.Enabled = false;
-            legend3.Name = "Legend1";
-            this.MemChart.Legends.Add(legend3);
-            this.MemChart.Location = new System.Drawing.Point(509, 42);
-            this.MemChart.Name = "MemChart";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.MemChart.Series.Add(series3);
-            this.MemChart.Size = new System.Drawing.Size(226, 208);
-            this.MemChart.TabIndex = 26;
-            this.MemChart.Text = "chart1";
-            // 
-            // TimeChart
-            // 
-            chartArea4.Name = "ChartArea1";
-            this.TimeChart.ChartAreas.Add(chartArea4);
-            legend4.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
-            legend4.Enabled = false;
-            legend4.Name = "Legend1";
-            this.TimeChart.Legends.Add(legend4);
-            this.TimeChart.Location = new System.Drawing.Point(264, 47);
-            this.TimeChart.Name = "TimeChart";
-            series4.ChartArea = "ChartArea1";
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.TimeChart.Series.Add(series4);
-            this.TimeChart.Size = new System.Drawing.Size(224, 208);
-            this.TimeChart.TabIndex = 27;
-            this.TimeChart.Text = "chart2";
-            // 
-            // label65
-            // 
-            this.label65.AutoSize = true;
-            this.label65.Location = new System.Drawing.Point(336, 19);
-            this.label65.Name = "label65";
-            this.label65.Size = new System.Drawing.Size(64, 17);
-            this.label65.TabIndex = 6;
-            this.label65.Text = "Runtime:";
-            // 
-            // label66
-            // 
-            this.label66.AutoSize = true;
-            this.label66.Location = new System.Drawing.Point(578, 19);
-            this.label66.Name = "label66";
-            this.label66.Size = new System.Drawing.Size(99, 17);
-            this.label66.TabIndex = 6;
-            this.label66.Text = "Memory Used:";
-            // 
             // panel9
             // 
             this.panel9.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel9.Controls.Add(this.ControlKey);
             this.panel9.Controls.Add(this.label71);
-            this.panel9.Location = new System.Drawing.Point(757, 42);
+            this.panel9.Location = new System.Drawing.Point(305, 33);
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(218, 60);
             this.panel9.TabIndex = 7;
@@ -637,23 +786,75 @@ namespace WindowsFormsApp1
             // label67
             // 
             this.label67.AutoSize = true;
-            this.label67.Location = new System.Drawing.Point(767, 19);
+            this.label67.Location = new System.Drawing.Point(315, 10);
             this.label67.Name = "label67";
             this.label67.Size = new System.Drawing.Size(53, 17);
             this.label67.TabIndex = 28;
             this.label67.Text = "Control";
             // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(558, 33);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(167, 30);
+            this.button4.TabIndex = 29;
+            this.button4.Text = "Refresh Databases";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(558, 69);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(167, 30);
+            this.button5.TabIndex = 30;
+            this.button5.Text = "Test Different Variables";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(770, 32);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(167, 25);
+            this.button6.TabIndex = 31;
+            this.button6.Text = "Runy # Times:";
+            this.button6.UseVisualStyleBackColor = true;
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.DecimalPlaces = 2;
+            this.numericUpDown1.Location = new System.Drawing.Point(943, 32);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(98, 22);
+            this.numericUpDown1.TabIndex = 41;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(977, 400);
+            this.ClientSize = new System.Drawing.Size(1237, 574);
+            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.button6);
+            this.Controls.Add(this.button5);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.label67);
             this.Controls.Add(this.panel9);
-            this.Controls.Add(this.label66);
-            this.Controls.Add(this.label65);
-            this.Controls.Add(this.TimeChart);
-            this.Controls.Add(this.MemChart);
             this.Controls.Add(this.label61);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
@@ -668,46 +869,46 @@ namespace WindowsFormsApp1
             this.Controls.Add(this.label60);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.richTextBox1);
             this.Name = "Form1";
             this.Text = "Form1";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.GamaInput)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.EpsilonInput)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PhiInput)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DeltaInput)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MisrakInput)).EndInit();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NAkInput)).EndInit();
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MemChart)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TimeChart)).EndInit();
             this.panel9.ResumeLayout(false);
             this.panel9.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label KowalskiTime;
         private System.Windows.Forms.Label KowalskiMem;
-        private System.Windows.Forms.Label KowalskiHot;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label60;
         private System.Windows.Forms.Label label61;
         private System.Windows.Forms.Label label62;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Label PRankTime;
-        private System.Windows.Forms.Label PRankMem;
-        private System.Windows.Forms.Label PRankHot;
+        private System.Windows.Forms.Label BoyerTime;
+        private System.Windows.Forms.Label BoyerMem;
+        private System.Windows.Forms.Label BoyerHot;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
@@ -737,14 +938,28 @@ namespace WindowsFormsApp1
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.DataVisualization.Charting.Chart MemChart;
-        private System.Windows.Forms.DataVisualization.Charting.Chart TimeChart;
-        private System.Windows.Forms.Label label65;
-        private System.Windows.Forms.Label label66;
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.Label ControlKey;
         private System.Windows.Forms.Label label71;
         private System.Windows.Forms.Label label67;
+        private System.Windows.Forms.NumericUpDown DeltaInput;
+        private System.Windows.Forms.NumericUpDown PhiInput;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.NumericUpDown EpsilonInput;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.NumericUpDown GamaInput;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.NumericUpDown MisrakInput;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.NumericUpDown NAkInput;
+        private System.Windows.Forms.Label KowalskiAllHot;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
     }
 }
 

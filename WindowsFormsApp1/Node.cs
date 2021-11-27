@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WindowsFormsApp1
+﻿namespace WindowsFormsApp1
 {
-    class List 
+    class List
     {
         public Node<string> root = new Node<string>();
-        
-        
+
+
         public void InsertNode(Node<string> proot, string pval, int pcount)
         {
             if (proot == null)
@@ -59,6 +53,6 @@ namespace WindowsFormsApp1
                 return 1 + Previous.NodeIndex();
             }
         }
-       
+
     }
 }

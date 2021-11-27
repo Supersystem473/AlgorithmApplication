@@ -1,19 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WindowsFormsApp1
 {
     public class AVLNode
     {
         public string value;
-        public int height, count = 1;
+        public int height, individualCounter;
+        private int offsetEstimate;
         public AVLNode left, right;
-
-        public AVLNode(string d)
+        public int OffsetEstimate
         {
+            get { return offsetEstimate; }
+        }
+        public AVLNode(string d, int pcount)
+        {
+            offsetEstimate = pcount;
+            individualCounter = pcount;
             value = d;
             height = 1;
         }
@@ -23,44 +25,207 @@ namespace WindowsFormsApp1
     {
 
         public AVLNode root;
-        /*
-        private string[,] AlphabeticalOrder = new string[,] {
-                                                               {"1","-9"},
-                                                               {"2", "-8" },
-                                                               {"3","-7" },
-                                                               {"4","-6" },
-                                                               {"5","-5" },
-                                                               {"6","-4" },
-                                                               {"7","-3" },
-                                                               {"8","-2" },
-                                                               {"9", "-1" },
-                                                               {"A","1"},
-                                                               {"B","2"},
-                                                               {"C","3"},
-                                                               {"D","4"},
-                                                               {"E","5"},
-                                                               {"F","6"},
-                                                               {"G","7"},
-                                                               {"H","8"},
-                                                               {"I","9"},
-                                                               {"J","10"},
-                                                               {"K","11"},
-                                                               {"L","12" },
-                                                               {"M","13" },
-                                                               {"N","14" },
-                                                               {"O","15" },
-                                                               {"P","16" },
-                                                               {"Q","17" },
-                                                               {"R","18" },
-                                                               {"S","19" },
-                                                               {"T","20" },
-                                                               {"U","21" },
-                                                               {"V","22" },
-                                                               {"W","23" },
-                                                               {"X", "24" },
-                                                               {"Y","25" },
-                                                               {"Z","26" } };
-        */
+        private int count = 0;
+        public int Size()
+        {
+            return count;
+        }
+        public int[] Check(string x)
+        {
+            int[] check = new int[2];
+            AVLNode ptemp = root;
+            while (ptemp != null)
+            {
+                int compare = string.Compare(x, ptemp.value, StringComparison.CurrentCulture);
+                if (compare == -1)
+                {
+                    ptemp = ptemp.left;
+                }
+                else if (compare == 1)
+                {
+                    ptemp = ptemp.right;
+                }
+                else if (compare == 0)
+                {
+                    check[0] = ptemp.individualCounter;
+                    check[1] = ptemp.OffsetEstimate;
+                    return check;
+                }
+            }
+            return null;
+        }
+        public bool Increment(AVLNode node, string key)
+        {
+
+            int order = string.Compare(node.value, key, StringComparison.CurrentCulture);
+            if (order == -1 && node.left != null && Increment(node.left, key)){ }
+            else if (order == 1 && node.right != null && Increment(node.right, key)) { }
+            else if (order == 0)
+            {
+                node.individualCounter++;
+                return true;
+            }
+            return false;
+        }
+        public bool Decrement(AVLNode node, string key)
+        {
+
+            int order = string.Compare(node.value, key, StringComparison.CurrentCulture);
+            if (order == -1)
+                Decrement(node.left, key);
+            else if (order == 1)
+                Decrement(node.right, key);
+            else
+            {
+                node.individualCounter--;
+                return true;
+            }
+            return false;
+        }
+        public void DecrementAll(AVLNode ptemp)
+        {
+            if(ptemp.left != null)
+            {
+                DecrementAll(ptemp.left);
+                ptemp.left.individualCounter--;
+                if(ptemp.left.individualCounter == 0)
+                {
+                    RemoveLeft(ptemp, ptemp.left);
+                }
+            }
+            if(ptemp.right != null)
+            {
+                DecrementAll(ptemp.right);
+                ptemp.right.individualCounter--;
+                if(ptemp.right.individualCounter == 0)
+                {
+                    RemoveRight(ptemp, ptemp.right);
+                }
+            }
+            if (ptemp == root)
+            {
+                ptemp.individualCounter--;
+                if(ptemp.individualCounter == 0)
+                {
+                    RemoveRoot(ptemp);
+                }
+            }
+        }
+        public void RemoveRoot(AVLNode node)
+        {
+            AVLNode x = null;
+            AVLNode y = null;
+            if(node.right == null && node.left == null)
+            {
+                root = null;
+            }
+            else if(node.right != null && node.left == null)
+            {
+                root = node.right;
+            }
+            else if(node.left != null && node.right == null)
+            {
+                root = node.left;
+            }
+            else
+            {
+                x = node.right;
+                
+                while(x.left!= null)
+                {
+                    y = x;
+                    x = x.left;
+                }
+                if(x.right != null)
+                {
+                    y.left = x.right;
+                }
+                x.left = root.left;
+                x.right = root.right;
+                root = x;
+            }
+        }
+        public void RemoveRight(AVLNode parent, AVLNode node)
+        {
+            AVLNode x;
+            AVLNode Y;
+            if (node.right == null && node.left == null)
+            {
+                parent.right = null;
+            }
+            else if (node.right != null && node.left == null)
+            {
+                parent.right = node.right;
+            }
+            else if (node.left != null && node.right == null)
+            {
+                parent.right = node.left;
+            }
+            else
+            {
+                x = node.right;
+                Y = node;
+                while(node.left != null)
+                {
+                    Y = x;
+                    x = x.left;
+                }
+                if(x.right != null)
+                {
+                    Y.left = x.right;
+                }
+                parent.right = x;
+                x.left = node.left;
+                x.right = node.right;
+            }
+        }
+        public void RemoveLeft(AVLNode parent, AVLNode node)
+        {
+            AVLNode x;
+            AVLNode Y;
+            if (node.right == null && node.left == null)
+            {
+                parent.left = null;
+            }
+            else if (node.right != null && node.left == null)
+            {
+                parent.left = node.right;
+            }
+            else if (node.left != null && node.right == null)
+            {
+                parent.left = node.left;
+            }
+            else
+            {
+                x = node.right ;
+                Y = node;
+                while (node.left != null)
+                {
+                    Y = x;
+                    x = x.left;
+                }
+                if (x.right != null)
+                {
+                    Y.left = x.right;
+                }
+                parent.left = x;
+                x.left = node.left;
+                x.right = node.right;
+            }
+        }
+        public string Results(AVLNode node)
+        {
+            string results = node.value;
+            if (node.left != null)
+            {
+                results = results + "," + Results(node.left);
+            }
+            if(node.right != null)
+            {
+                results = results + "," + Results(node.right);
+            }
+            return results;
+        }
         // A utility function to get
         // the height of the tree
         int height(AVLNode N)
@@ -131,95 +296,164 @@ namespace WindowsFormsApp1
             return height(N.left) - height(N.right);
         }
 
+        AVLNode minValueNode(AVLNode node)
+        {
+            AVLNode current = node;
 
+            /* loop down to find the leftmost leaf */
+            while (current.left != null)
+                current = current.left;
+
+            return current;
+        }
+        AVLNode deleteNode(AVLNode node, int s)
+        {
+            AVLNode templ, tempr;
+            if (node.left.individualCounter - node.left.OffsetEstimate < s)
+            {
+
+            }
+            // If the tree had only one node then return
+            if (node == null)
+                return node;
+
+            // STEP 2: UPDATE HEIGHT OF THE CURRENT NODE
+            node.height = max(height(node.left),
+                        height(node.right)) + 1;
+
+            // STEP 3: GET THE BALANCE FACTOR
+            // OF THIS NODE (to check whether
+            // this node became unbalanced)
+            int balance = getBalance(node);
+
+            // If this node becomes unbalanced,
+            // then there are 4 cases
+            // Left Left Case
+            if (balance > 1 && getBalance(node.left) >= 0)
+                return rightRotate(node);
+
+            // Left Right Case
+            if (balance > 1 && getBalance(node.left) < 0)
+            {
+                node.left = leftRotate(node.left);
+                return rightRotate(node);
+            }
+
+            // Right Right Case
+            if (balance < -1 && getBalance(node.right) <= 0)
+                return leftRotate(node);
+
+            // Right Left Case
+            if (balance < -1 && getBalance(node.right) > 0)
+            {
+                node.right = rightRotate(node.right);
+                return leftRotate(node);
+            }
+
+            return node;
+        }
         public AVLNode insert(AVLNode node, string key)
         {
+
+
+            /* 1. Perform the normal BST insertion */
+            if (node == null)
             {
+                count++;
+                return (new AVLNode(key, count));
 
-                /* 1. Perform the normal BST insertion */
-                if (node == null)
-                    return (new AVLNode(key));
-                int order = string.Compare(node.value, key, StringComparison.CurrentCulture);
-                if (order == -1)
-                    node.left = insert(node.left, key);
-                else if (order == 1)
-                    node.right = insert(node.right, key);
-                else // Duplicate keys not allowed
-                {
-                    node.count++;
-                    return node;
-                }
-
-
-                /* 2. Update height of this ancestor node */
-                node.height = 1 + max(height(node.left),
-                                height(node.right));
-
-                /* 3. Get the balance factor of this ancestor
-                    node to check whether this node became
-                    unbalanced */
-                int balance = getBalance(node);
-
-                // If this node becomes unbalanced, then there
-                // are 4 cases Left Left Case
-                int leftorder;
-                int rightorder;
-                if (node.left == null)
-                {
-                    leftorder = 0;
-                }
-                else
-                {
-                    leftorder = string.Compare(node.left.value, key, StringComparison.CurrentCulture);
-                }
-                if (node.right == null)
-                {
-                    rightorder = 0;
-                }
-                else
-                {
-                  rightorder = string.Compare(node.right.value, key, StringComparison.CurrentCulture);
-                }
-                if (balance > 1 && leftorder == 1)
-                    return rightRotate(node);
-
-                // Right Right Case
-                if (balance < -1 && rightorder == -1)
-                    return leftRotate(node);
-
-                // Left Right Case
-                if (balance > 1 && leftorder == 1)
-                {
-                    node.left = leftRotate(node.left);
-                    return rightRotate(node);
-                }
-
-                // Right Left Case
-                if (balance < -1 && rightorder == -1)
-                {
-                    node.right = rightRotate(node.right);
-                    return leftRotate(node);
-                }
-
-                /* return the (unchanged) node pointer */
+            }
+            int order = string.Compare(node.value, key, StringComparison.CurrentCulture);
+            if (order == -1)
+                node.left = insert(node.left, key);
+            else if (order == 1)
+                node.right = insert(node.right, key);
+            else // Duplicate Keys increase count
+            {
+                node.individualCounter++;
                 return node;
             }
-        }
-            
 
-        // A utility function to print preorder traversal
-        // of the tree.
-        // The function also prints height of every node
-        public void preOrder(AVLNode node)
-        {
-            if (node != null)
+
+            /* 2. Update height of this ancestor node */
+            node.height = 1 + max(height(node.left),
+                            height(node.right));
+
+            /* 3. Get the balance factor of this ancestor
+                node to check whether this node became
+                unbalanced */
+            int balance = getBalance(node);
+
+            // If this node becomes unbalanced, then there
+
+            int leftorder;
+            int rightorder;
+            if (node.left == null)
             {
-                Console.Write(node.value + " ");
-                preOrder(node.left);
-                preOrder(node.right);
+                leftorder = 0;
             }
+            else
+            {
+                leftorder = string.Compare(node.left.value, key, StringComparison.CurrentCulture);
+            }
+            if (node.right == null)
+            {
+                rightorder = 0;
+            }
+            else
+            {
+                rightorder = string.Compare(node.right.value, key, StringComparison.CurrentCulture);
+            }
+            // are 4 cases Left Left Case
+            if (balance > 1 && leftorder == 1)
+                return rightRotate(node);
+
+            // Right Right Case
+            if (balance < -1 && rightorder == -1)
+                return leftRotate(node);
+
+            // Left Right Case
+            if (balance > 1 && leftorder == 1)
+            {
+                node.left = leftRotate(node.left);
+                return rightRotate(node);
+            }
+
+            // Right Left Case
+            if (balance < -1 && rightorder == -1)
+            {
+                node.right = rightRotate(node.right);
+                return leftRotate(node);
+            }
+
+            /* return the (unchanged) node pointer */
+            return node;
         }
     }
+    /* public AVLNode RemoveNode(AVLNode node)
+     {
+         AVLNode temp1, temp2;
+         if (node.left == null && node.right == null)
+             return null;
+         else if (node.left != null && node.right == null)
+             return node.left;
+         else if (node.right != null && node.left == null)
+             return node.right;
+         else
+         {
+             temp1 = node.left.right;
+             node.left.right = node.right;
+             temp2 = node.right;
+             while (temp2.left != null)
+             {
+                 temp2 = temp2.left;
+             }
+             temp2.left = temp1;
+         }
+     }
+
+     */
 }
+
 
 
