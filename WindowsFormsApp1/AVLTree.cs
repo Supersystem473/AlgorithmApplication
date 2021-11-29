@@ -54,31 +54,48 @@ namespace WindowsFormsApp1
             }
             return null;
         }
-        public bool Increment(AVLNode node, string key)
+        public bool Increment(AVLNode ptemp, string x)
         {
 
-            int order = string.Compare(node.value, key, StringComparison.CurrentCulture);
-            if (order == -1 && node.left != null && Increment(node.left, key)){ }
-            else if (order == 1 && node.right != null && Increment(node.right, key)) { }
-            else if (order == 0)
+            while (ptemp != null)
             {
-                node.individualCounter++;
+                int compare = string.Compare(x, ptemp.value, StringComparison.CurrentCulture);
+                if (compare == -1)
+                {
+                    ptemp = ptemp.left;
+                }
+                else if (compare == 1)
+                {
+                    ptemp = ptemp.right;
+                }
+                else if (compare == 0)
+                {
+                    ptemp.individualCounter++;
+                }
                 return true;
             }
             return false;
         }
-        public bool Decrement(AVLNode node, string key)
+        public bool Decrement(AVLNode ptemp, string x)
         {
 
-            int order = string.Compare(node.value, key, StringComparison.CurrentCulture);
-            if (order == -1)
-                Decrement(node.left, key);
-            else if (order == 1)
-                Decrement(node.right, key);
-            else
+            int order = string.Compare(ptemp.value, x, StringComparison.CurrentCulture);
+            while (ptemp != null)
             {
-                node.individualCounter--;
-                return true;
+                int compare = string.Compare(x, ptemp.value, StringComparison.CurrentCulture);
+                if (compare == -1)
+                {
+                    ptemp = ptemp.left;
+                }
+                else if (compare == 1)
+                {
+                    ptemp = ptemp.right;
+                }
+                else if (compare == 0)
+                {
+                    ptemp.individualCounter--;
+                    return true;
+                }
             }
             return false;
         }

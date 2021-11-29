@@ -43,8 +43,8 @@ namespace WindowsFormsApp1
                 for (int i = 0; i < degree; i++)//add a new index degree times
                 {
                     int r = rand.Next(0, LengthOfW - 1);//it starts at 0 and is LengthOfW-1 because the index is zero based
-                    while (G[x].Contains(r))//if the index is already in G get a new one.
-                        r = rand.Next(0, LengthOfW - 1);
+                    //while (G[x].Contains(r))//if the index is already in G get a new one.
+                    //    r = rand.Next(0, LengthOfW - 1);
                     G[x].Add(r);//add r as a new index in W
                     W[r]++;//increase counter
                 }

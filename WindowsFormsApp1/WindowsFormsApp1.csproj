@@ -106,6 +106,7 @@
     <None Include="Properties\FiftyRandomNames.xlsx" />
     <None Include="Properties\onethrough50.xlsx" />
     <None Include="Properties\Onethroughfive.xlsx" />
+    <None Include="Properties\Report.xlsx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -14,7 +14,6 @@ namespace WindowsFormsApp1
             this.k = k;
         }
         public AVLTree t = new AVLTree();
-        public ArrayList A2Results;
         public List<string> T = new List<string>();
         public int k = 5, d = 0;
         public void Algorithm2(Database pdb)
@@ -25,21 +24,20 @@ namespace WindowsFormsApp1
             {
                 for(int j = 0; j < database.DBArray.GetLength(1); j++)
                 {
+
                     if (t.root == null)
                     {
-                        t.root = t.insert(t.root, database.DBArray.GetValue(i + 1, j + 1).ToString()) ;
+                        t.root = t.insert(t.root, database.DBArray.GetValue(i + 1, j + 1).ToString());
                     }
-                    else if (t.Increment(t.root,database.DBArray.GetValue(i+1,j+1).ToString()))
-                    {
-
+                    else if (t.Increment(t.root, database.DBArray.GetValue(i + 1, j + 1).ToString()))
+                    { 
                     }
                     else
                     {
                         t.insert(t.root, database.DBArray.GetValue(i + 1, j + 1).ToString());
                         
-                        
                     }
-                    if(t.Size() == k)
+                    if(t.Size() >= k)
                     {
                         t.DecrementAll(t.root);
                     }

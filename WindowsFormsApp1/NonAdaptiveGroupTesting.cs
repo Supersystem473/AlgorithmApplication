@@ -8,7 +8,7 @@ namespace WindowsFormsApp1
         private int numofinsertions;
         private double frequency;
         private bool check;
-
+        int n;
         private int totalvalue;
         double δ = .1;
         double k = 1;
@@ -18,14 +18,13 @@ namespace WindowsFormsApp1
         Database database;
         int[,,] c;
         // call in array 
-        public NonAdaptiveGroupTesting(Database db, double k)
+        public NonAdaptiveGroupTesting(Database db, double k, int W, int T)
         {
             this.k = k;
             
             database = db;
-            k = 0.01 * database.DBArray.Length;
-            W = Convert.ToInt32(2/(1/(2*k)));
-            T = 2 ;
+            this.W = W;
+            this.T = T;
             totalvalue = Convert.ToInt32(Math.Log(database.DBArray.Length) + 1);
             frequency = (database.DBArray.Length) * .05;
             Initialize();
@@ -42,9 +41,9 @@ namespace WindowsFormsApp1
             c = new int[T + 1, W, totalvalue + 1];
             a = new int[T + 1];
             b = new int[T + 1];
-            int n = 1;
+            numofinsertions = 0;
             Random rand = new Random();
-            for (int i = 1; i <= T; i++)
+            for (int i = 0; i <= T; i++)
             {
                 for (int j = 0; j < W; j++)
                 {
@@ -59,24 +58,28 @@ namespace WindowsFormsApp1
         }
         public int bit(int x, int j)
         {
-
+            int bi =0;
             int val = x;
+            char[] binaryArray;
             string binary = Convert.ToString(val, 2);
-            int length = binary.Length - 1;
-            if (binary.Length - j < 0)
+            binaryArray = binary.ToCharArray();
+            Array.Reverse(binaryArray);
+            //int length = binary.Length - 1;
+            if (binaryArray.Length - j < 0)
                 return 0;
-            int b = binary[binary.Length - j];
-            if (b == 49)
-            {
-                b = 1;
-            }
-            else if (b == 48)
-                b = 0;
-            return b;
+            char b = binaryArray[j-1];
+            return (int)Char.GetNumericValue(b);
+            //if (b == '1')
+            //{
+            //    bi = 1;
+            //}
+            //else if (b == '0')
+            //    bi = 0;
+            //return bi;
         }
         public void UpdateCounters(int x, bool trans, int i, int hx)
         {
-            int d = 1;
+            int d = 0;
             double[] q = new double[totalvalue];
             if (trans == true)
             {
@@ -91,7 +94,6 @@ namespace WindowsFormsApp1
             c[i, hx, 0] = c[i, hx, 0] + d;
             for (int j = 1; j < totalvalue; j++)
             {
-
                 c[i, hx, j] = c[i, hx, j] + bit(x, j) * d;
             }
         }
@@ -111,49 +113,59 @@ namespace WindowsFormsApp1
         }
         public string GroupTest()
         {
+            //bool endLoop = false;
             string results = "";
-            for (int i = 1; i < T; i++)
+            for (int i = 1; i <= T; i++)
                 for (int j = 0; j < W - 1; j++)
                 {
 
-
+                    //endLoop = false;
                     int r = 1;
                     int t = Convert.ToInt32(numofinsertions / (k + 1));
                     int x = 0;
                     if (c[i, j, 0] > t)
                     {
 
-
+                        
                         for (int l = 1; l < totalvalue; l++)
                         {
-
+                            
 
                             int p = c[i, j, l];
                             int q = c[i, j, 0] - p;
                             if ((p <= t || q <= t) && (p > t || q > t))
-                                i++;
-                            if (p > t)
+                            {
+                                //endLoop = true;
+                                //break;
+                                
+                            }
+                            else if (p > t)
                             {
                                 x = x + r;
-
+                                
                             }
                             r = 2 * r;
                         }
-                        int hi = ((a[i] * x + b[i]) % P) % W;
-                        if (hi == j)
-                        {
-
-
-                            for (int l = 1; l <= T; l++)
+                        //if (endLoop)
+                        //{
+                        //    break;
+                        //}
+                        
+                            int hi = ((a[i] * x + b[i]) % P) % W;
+                            if (hi == j)
                             {
-                                int hl = ((a[l] * x + b[l]) % P) % W;
 
-                                if (c[l, hl, 0] > t)
+                                for (int l = 1; l <= T; l++)
                                 {
-                                    results = results + x.ToString();
+                                    int hl = ((a[l] * x + b[l]) % P) % W;
+
+                                    if (c[l, hl, 0] > t)
+                                    {
+                                        results = results + " " + x.ToString();
+                                    }
                                 }
                             }
-                        }
+                        
                     }
                 }
             return results;

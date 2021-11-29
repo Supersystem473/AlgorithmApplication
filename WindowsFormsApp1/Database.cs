@@ -16,6 +16,7 @@ namespace WindowsFormsApp1
         public List<string> Distinct = new List<string>();
         public Node<string> DBList = new Node<string>();
         public System.Array DBArray;
+        public string DatabasePath;
         public AVLTree AVL = new AVLTree();
         public string key;
         public int Count
@@ -25,15 +26,12 @@ namespace WindowsFormsApp1
         }
         public Database(string DBname, int keyrow, int keycolumn, string cell1, string cell2)
         {
-            string DatabasePath = CreateDBPath(DBname);
+            DatabasePath = CreateDBPath(DBname);
             CreateArray(DatabasePath, keyrow, keycolumn, cell1, cell2);
         }
-
-        //C:\Users\jdste\source\repos\AlgorithmApplication\WindowsFormsApp1\DataStreams\BoolDB.xlsx
-        //C:\Users\jdste\source\repos\AlgorithmApplication\WindowsFormsApp1\Properties\onethrough50.xlsx
         public string CreateDBPath(string dbName)
         {
-            return $@"C:\Users\jdste\source\repos\AlgorithmApplication\WindowsFormsApp1\Properties\{dbName}.xlsx";
+            return $@"D:\AlgorithmApplication\WindowsFormsApp1\Properties\{dbName}.xlsx";
         }
         public void CreateArray(string filepath, int keyrow, int keycolumn, string cell1, string cell2)
         {
@@ -46,6 +44,7 @@ namespace WindowsFormsApp1
             System.Array array;
             Excel.Range range = xlWorkSheet.Range[cell1, cell2];
             array = (System.Array)range.Cells.Value;
+            
             for (int i = 0; i < array.GetLength(0); i++)
             {
                 for (int j = 0; j < array.GetLength(1); j++)

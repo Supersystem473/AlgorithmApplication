@@ -11,8 +11,11 @@ namespace WindowsFormsApp1
         public bool RunNonadaptive;
         private int phi;
         public int delta;
-        int NAk, Misrak;
+        double NAk;
+            int Misrak, NAT, NAW;
         private double epsilon, gama;
+        
+        
         private System.ComponentModel.IContainer components = null;
         public Database BoolDB = new Database("BoolDB",1,7,"A1","A500");
         public Database OneToFifty = new Database("onethrough50",1,18,"A1","N350");
@@ -20,8 +23,15 @@ namespace WindowsFormsApp1
         public Database OneToFive = new Database("Onethroughfive",1,33,"A1","AC5820");
         public Database FiftyNames = new Database("FiftyRandomNames",1,7,"A1","A1000");
         public Database ActiveDB = null;
-        public string filepath = @"C:\Users\jdste\source\repos\AlgorithmApplication\WindowsFormsApp1\Properties\Info.txt";
-
+        public enum DataSet
+        {
+            BoolDB,
+            OneToFifty,
+            Alphabet,
+            OneToFive,
+            FiftyNames
+        }
+        DataSet SetId;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -105,9 +115,13 @@ namespace WindowsFormsApp1
             this.label71 = new System.Windows.Forms.Label();
             this.label67 = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.Run_TImes = new System.Windows.Forms.Button();
+            this.TimesToRun = new System.Windows.Forms.NumericUpDown();
+            this.LoadingBar = new System.Windows.Forms.ProgressBar();
+            this.NAWInput = new System.Windows.Forms.NumericUpDown();
+            this.NATInput = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GamaInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.EpsilonInput)).BeginInit();
@@ -120,7 +134,9 @@ namespace WindowsFormsApp1
             ((System.ComponentModel.ISupportInitialize)(this.NAkInput)).BeginInit();
             this.panel5.SuspendLayout();
             this.panel9.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TimesToRun)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NAWInput)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NATInput)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -224,6 +240,7 @@ namespace WindowsFormsApp1
             0,
             0,
             131072});
+            this.EpsilonInput.ValueChanged += new System.EventHandler(this.EpsilonInput_ValueChanged);
             // 
             // label8
             // 
@@ -314,6 +331,7 @@ namespace WindowsFormsApp1
             this.label5.Size = new System.Drawing.Size(99, 17);
             this.label5.TabIndex = 2;
             this.label5.Text = "Memory Used:";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // label3
             // 
@@ -532,6 +550,10 @@ namespace WindowsFormsApp1
             // 
             this.panel4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel4.Controls.Add(this.label4);
+            this.panel4.Controls.Add(this.label1);
+            this.panel4.Controls.Add(this.NATInput);
+            this.panel4.Controls.Add(this.NAWInput);
             this.panel4.Controls.Add(this.label11);
             this.panel4.Controls.Add(this.MuthuNATime);
             this.panel4.Controls.Add(this.NAkInput);
@@ -572,16 +594,11 @@ namespace WindowsFormsApp1
             0,
             0,
             0});
-            this.NAkInput.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.NAkInput.Name = "NAkInput";
             this.NAkInput.Size = new System.Drawing.Size(74, 22);
             this.NAkInput.TabIndex = 40;
             this.NAkInput.Value = new decimal(new int[] {
-            1000,
+            4,
             0,
             0,
             0});
@@ -802,56 +819,109 @@ namespace WindowsFormsApp1
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
-            // button5
+            // Run_TImes
             // 
-            this.button5.Location = new System.Drawing.Point(558, 69);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(167, 30);
-            this.button5.TabIndex = 30;
-            this.button5.Text = "Test Different Variables";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.Run_TImes.Location = new System.Drawing.Point(770, 32);
+            this.Run_TImes.Name = "Run_TImes";
+            this.Run_TImes.Size = new System.Drawing.Size(167, 25);
+            this.Run_TImes.TabIndex = 31;
+            this.Run_TImes.Text = "Runy # Times:";
+            this.Run_TImes.UseVisualStyleBackColor = true;
+            this.Run_TImes.Click += new System.EventHandler(this.Run_TImes_Click);
             // 
-            // button6
+            // TimesToRun
             // 
-            this.button6.Location = new System.Drawing.Point(770, 32);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(167, 25);
-            this.button6.TabIndex = 31;
-            this.button6.Text = "Runy # Times:";
-            this.button6.UseVisualStyleBackColor = true;
-            // 
-            // numericUpDown1
-            // 
-            this.numericUpDown1.DecimalPlaces = 2;
-            this.numericUpDown1.Location = new System.Drawing.Point(943, 32);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.TimesToRun.Location = new System.Drawing.Point(943, 32);
+            this.TimesToRun.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
-            this.numericUpDown1.Minimum = new decimal(new int[] {
+            this.TimesToRun.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(98, 22);
-            this.numericUpDown1.TabIndex = 41;
-            this.numericUpDown1.Value = new decimal(new int[] {
+            this.TimesToRun.Name = "TimesToRun";
+            this.TimesToRun.Size = new System.Drawing.Size(98, 22);
+            this.TimesToRun.TabIndex = 41;
+            this.TimesToRun.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            // 
+            // LoadingBar
+            // 
+            this.LoadingBar.Location = new System.Drawing.Point(770, 70);
+            this.LoadingBar.Name = "LoadingBar";
+            this.LoadingBar.Size = new System.Drawing.Size(271, 23);
+            this.LoadingBar.TabIndex = 42;
+            // 
+            // NAWInput
+            // 
+            this.NAWInput.DecimalPlaces = 2;
+            this.NAWInput.Location = new System.Drawing.Point(68, 173);
+            this.NAWInput.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.NAWInput.Name = "NAWInput";
+            this.NAWInput.Size = new System.Drawing.Size(74, 22);
+            this.NAWInput.TabIndex = 41;
+            this.NAWInput.Value = new decimal(new int[] {
+            4,
+            0,
+            0,
+            0});
+            this.NAWInput.ValueChanged += new System.EventHandler(this.NAWInput_ValueChanged);
+            // 
+            // NATInput
+            // 
+            this.NATInput.DecimalPlaces = 2;
+            this.NATInput.Location = new System.Drawing.Point(68, 219);
+            this.NATInput.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.NATInput.Name = "NATInput";
+            this.NATInput.Size = new System.Drawing.Size(74, 22);
+            this.NATInput.TabIndex = 42;
+            this.NATInput.Value = new decimal(new int[] {
             2,
             0,
             0,
             0});
+            this.NATInput.ValueChanged += new System.EventHandler(this.NATInput_ValueChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(9, 227);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(17, 17);
+            this.label1.TabIndex = 43;
+            this.label1.Text = "T";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(9, 178);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(21, 17);
+            this.label4.TabIndex = 44;
+            this.label4.Text = "W";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1237, 574);
-            this.Controls.Add(this.numericUpDown1);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.button5);
+            this.Controls.Add(this.LoadingBar);
+            this.Controls.Add(this.TimesToRun);
+            this.Controls.Add(this.Run_TImes);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.label67);
             this.Controls.Add(this.panel9);
@@ -889,7 +959,9 @@ namespace WindowsFormsApp1
             this.panel5.PerformLayout();
             this.panel9.ResumeLayout(false);
             this.panel9.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TimesToRun)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NAWInput)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NATInput)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -957,9 +1029,13 @@ namespace WindowsFormsApp1
         private System.Windows.Forms.Label KowalskiAllHot;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Button Run_TImes;
+        private System.Windows.Forms.NumericUpDown TimesToRun;
+        private System.Windows.Forms.ProgressBar LoadingBar;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown NATInput;
+        private System.Windows.Forms.NumericUpDown NAWInput;
     }
 }
 

@@ -10,6 +10,7 @@ namespace WindowsFormsApp1
     class Red_BlackTree
     {
         private int size = 0;
+        public int resultNum;
         public int Size
         {
             get { return size; }
@@ -212,7 +213,7 @@ namespace WindowsFormsApp1
                 {
                     X = X.left;
                 }
-                else if( newItem.data.CompareTo(X.data) == 1)
+                else if (newItem.data.CompareTo(X.data) == 1)
                 {
                     X = X.right;
                 }
@@ -227,7 +228,7 @@ namespace WindowsFormsApp1
             {
                 Y.left = newItem;
             }
-            else 
+            else
             {
                 Y.right = newItem;
             }
@@ -321,12 +322,12 @@ namespace WindowsFormsApp1
             {
                 return;
             }
-            else if(ptemp == root)
+            else if (ptemp == root)
             {
                 root = null;
                 return;
             }
-            else if(ptemp.left == null && ptemp.right == null)
+            else if (ptemp.left == null && ptemp.right == null)
             {
                 if (ptemp == ptemp.parent.left)
                     ptemp.parent.left = null;
@@ -334,12 +335,12 @@ namespace WindowsFormsApp1
                     ptemp.parent.right = null;
             }
             Y = ptemp;
-            if(ptemp.left == null)
+            if (ptemp.left == null)
             {
                 X = ptemp.right;
                 Transplant(ptemp, ptemp.right);
             }
-            else if(ptemp.right == null)
+            else if (ptemp.right == null)
             {
                 X = ptemp.left;
                 Transplant(ptemp, ptemp.left);
@@ -365,7 +366,7 @@ namespace WindowsFormsApp1
                 Y.colour = ptemp.colour;
 
             }
-            if(ogColor == Color.Black)
+            if (ogColor == Color.Black)
             {
                 DeleteFixUp(X);
             }
@@ -376,7 +377,7 @@ namespace WindowsFormsApp1
             //{
             //    Y = ptemp;
             //}
-            
+
             //else
             //{
             //    Y = TreeSuccessor(ptemp);
@@ -438,7 +439,7 @@ namespace WindowsFormsApp1
                 if (X == X.parent.left)
                 {
                     RBNode W = X.parent.right;
-                    if(W == null)
+                    if (W == null)
                     {
                         X.colour = Color.Red;
                     }
@@ -451,7 +452,7 @@ namespace WindowsFormsApp1
                     }
                     else if (W.left.colour == Color.Black && W.right.colour == Color.Black)
                     {
-                        if(W.left != null)
+                        if (W.left != null)
                             W.colour = Color.Red; //case 2
                         X = X.parent; //case 2
                     }
@@ -470,7 +471,7 @@ namespace WindowsFormsApp1
                         LeftRotate(X.parent); //case 4
                         X = root; //case 4
                     }
-                    
+
                 }
                 else //mirror code from above with "right" & "left" exchanged
                 {
@@ -506,7 +507,7 @@ namespace WindowsFormsApp1
         }
         private RBNode Minimum(RBNode X)
         {
-            if(X.left == null)
+            if (X.left == null)
             {
                 return X;
             }
@@ -567,13 +568,15 @@ namespace WindowsFormsApp1
 
             if (ptemp.Counter - ptemp.OffsetCounter >= s)
             {
-                results = results + " " +ptemp.data;
+               
+                results = ptemp.data + " " + results;
+                resultNum++;
             }
             return results;
         }
-       
+
         public void remove_small(int s, RBNode ptemp)
-        
+
         {
             if (ptemp == null)
             {
@@ -594,6 +597,5 @@ namespace WindowsFormsApp1
                 Delete(ptemp);
             }
         }
-
     }
 }

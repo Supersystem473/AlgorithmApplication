@@ -12,18 +12,18 @@ namespace WindowsFormsApp1
         public int delta = 1;
         int t = 0;
         public double phiPercentage = .08;
-        private Red_BlackTree C = new Red_BlackTree();
+        public Red_BlackTree C = new Red_BlackTree();
         Disperser Disperser;
         public enum operation
         {
             insert, delete
         }
-        public Kowalski(Database db, double percentage, int phi, int delta, double gama)
+        public Kowalski(Database db,int phi, int delta, double gama, double epsilon)
         {
             string s;
             database = db;
+            this.epsilon = epsilon;
             this.gama = gama;
-            this.phiPercentage = percentage;
             this.delta = delta;
             this.phi = phi;
             CreateDisperser();
@@ -73,7 +73,7 @@ namespace WindowsFormsApp1
             }
             else
             {
-                int gmin =  Disperser.W[Disperser.G[x].ElementAt(1)]; //set gmin to first counter of x
+                int gmin =  Disperser.W[Disperser.G[x].ElementAt(0)]; //set gmin to first counter of x
                 //take minimum group counters of x
                 for (int z = 1; z < Disperser.G[x].Count; z++)//go through each group counter in G
                 {
@@ -97,6 +97,7 @@ namespace WindowsFormsApp1
             string result = "";
             result = C.get_larger_than(s, C.root);
             return result;
+            
         }
 
     }
